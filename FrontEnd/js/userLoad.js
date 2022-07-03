@@ -9,23 +9,23 @@ var letgo = "";
 var CC = 0;
 var INV = 0;
 var currentState = 0;
-//
-var nick;
-var req = new XMLHttpRequest();
-req.onreadystatechange = function () {
-    if (this.readyState == 4 && this.status == 200) {
-        userId = this.responseText;
-        console.log("USUARIO:" + userId);
-        getUser();
-    }
-};
-req.open("GET", "/usernick", true);
-req.setRequestHeader("user", getByName("out"));
-req.send(null);
-//
+function requestBody() {
+    var req = new XMLHttpRequest();
+    req.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            userId = this.responseText;
+            console.log("USUARIO:" + userId);
+            getUser();
+        }
+    };
+    req.open("GET", "/usernick", true);
+    req.setRequestHeader("token", getByName("out"));
+    req.send(null);
+}
+requestBody();
 function getUser() {
     var input = document.getElementById("hi");
-    var aText = userId;
+    var aText = document.createTextNode(userId);
     input.appendChild(aText);
 }
 function setState(ident, path, tmpToken) {

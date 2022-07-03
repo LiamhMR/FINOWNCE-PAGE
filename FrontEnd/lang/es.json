@@ -41,7 +41,13 @@
     "user":{
         "menu":["Resumen","Cuentas","Inversiones","Contactar soprote","Cerrar sesión","Añadir cuenta","Añadir activo"],
         "summary":{},
-        "ccount":{},
+        "ccount":{
+            "greet":"Hola ",
+            "ccTH":"Cuentas",
+            "invTH":"Inversiones",
+            "graphCC":"",
+            "graphINV":""
+        },
         "invest":{},
         "support":{},
         "logout":{}

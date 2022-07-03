@@ -27,8 +27,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const data = __importStar(require("../json/users.json"));
-const db = __importStar(require("../json/db.json"));
+const data = __importStar(require("../json/tusers.json"));
+const db = __importStar(require("../json/tdb.json"));
 const fs = require('fs');
 const path = require('path');
 const jssub = "../";
@@ -78,16 +78,21 @@ const requireUser = () => {
 };
 const requireOUT = () => {
     return (req, res, next) => {
-        let token = req.headers["token"];
+        let token = req.headers["token"].split("_");
+        let code = token[0];
+        let ln = token[1];
+        let nick = data.allUsers.logs[ln];
         try {
-            if (data.allUsers["users"][(token.split('#'))[1]][0] == (token.split('#'))[0]) {
+            if (data.allUsers["users"][nick][0] == code) {
                 next();
             }
             else {
                 res.status(400).send("Invalid token");
+                console.log("Token incorrecto");
             }
         }
         catch (error) {
+            console.log("Invalid user");
             res.status(401).send("Invalid user");
         }
     };
@@ -123,19 +128,23 @@ app.get('/', (req, res, next) => {
 });
 //SESION LOGIN
 app.get('/userload', requireUser(), (req, res, next) => {
-    res.status(200).send(data.allUsers["users"][req.headers["user"]][0] + "#" + data.allUsers.users[req.headers["user"]][4]);
+    res.status(200).send(data.allUsers["users"][req.headers["user"]][0] + "_" + data.allUsers.users[req.headers["user"]][4]);
     //res.sendFile(path.join(__dirname,jssub+'../../FrontEnd/user/summary.html'));
     console.log("Capture login:" + req.headers["user"]);
 });
 //GET USER NICK
-app.get('/usernick', (req, res, next) => {
+app.get('/userinfo', requireOUT(), requireInfo(), (req, res, next) => {
+    console.log(req.header["ln"]);
     let ln = req.headers["ln"];
     res.status(200).send(data.allUsers.logs[ln]);
 });
 //LOAD USER INFO
-app.get("/userinfo", requireOUT(), requireInfo(), (req, res) => {
+app.get("/usernick", requireOUT(), (req, res, next) => {
     console.log("matched token");
-    res.status(200).send(data.allUsers.logs[((req.headers["token"]).split("#"))[1]]);
+    let token = req.headers["token"].split("_");
+    let ln = token[1];
+    let nick = data.allUsers.logs[ln];
+    res.status(200).send(nick);
 });
 //LOAD USER DATA
 app.get("/userdata", requireOUT(), requireInfo(), (req, res) => {
@@ -244,7 +253,6 @@ function updateDB() {
     //console.log("UPDATED JSON DB");
 }
 function getNick(out, lognum) {
-    console.log();
     const obj = data.allUsers;
 }
 app.listen(5000, () => console.log('Server started on 5000'));
