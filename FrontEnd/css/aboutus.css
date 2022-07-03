@@ -1,0 +1,27 @@
+h1{
+    text-align: center;
+    font-size: 40px;
+    color: aliceblue;
+}
+#content{
+    float:none;
+    text-align: center;
+    display: block;
+}
+
+.member{
+    text-align: center;
+}
+
+img{
+    filter: contrast(1.8) brightness(1.5) grayscale(1);
+    border: 1px solid rgb(223, 216, 231);
+    border-radius: 50px;
+    width: 80px;
+}
+
+p{
+    font-size: 20px;
+    text-align: center;
+    color: aliceblue;
+}

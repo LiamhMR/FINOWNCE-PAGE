@@ -1,0 +1,70 @@
+#fatherdiv{
+    text-align: center;
+    float: inline-start;
+    display:block;
+}
+
+p{
+    padding: 15px;
+    display: block;
+}
+
+body{
+    /*background-color: rgb(168, 156, 214);*/
+    background: rgb(110,32,237);
+    background: linear-gradient(90deg, rgba(110,32,237,1) 0%, rgba(176,38,255,1) 78%);
+}
+
+#presentation{
+    display:inline-flex;
+    width: 100%;
+}
+
+#texto{
+    display: grid;
+    color: white;
+    padding-left: 30px;
+    padding-right: 30px;
+    width:100%;
+}
+
+#title{
+    text-align: center;
+    font-size: 50px;
+    padding-bottom: 10px;
+}
+#image{
+    float: right;
+}
+
+#image img{
+    float: right;
+    width: 200px;
+    border: 2px solid white;
+    border-radius: 10px;
+}
+
+#easysign{
+    padding: 10px;
+    width: 100%;
+}
+
+span{
+    text-align: justify;
+    font-size: 30px;
+    color: aliceblue;
+}
+
+label{
+    padding-left: 5%;
+    font-size:30px;
+    color: aliceblue;
+    padding-top: 5px;
+}
+
+.inputForm{
+    font-size: 30px;
+    /*color: rgb(117, 117, 117);*/
+    color:black;
+    border-radius: 10px;
+}

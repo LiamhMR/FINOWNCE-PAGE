@@ -1,0 +1,52 @@
+form{
+    display: block; 
+    text-align: center;
+}
+
+label{
+    color: aliceblue;
+    text-align: center;
+    display: block;
+    font-size: 30px;
+}
+
+input{
+    font-size: 30px;
+    /*color: rgb(117, 117, 117);*/
+    color:black;
+    border-radius: 10px;
+    width: 40%;
+}
+
+select{
+    font-size: 30px;
+    /*color: rgb(117, 117, 117);*/
+    color:black;
+    border-radius: 10px;
+    width: 40%;
+}
+
+#save{
+    width: auto;
+}
+
+
+body{
+    background-color: rgb(168, 156, 214);
+}
+
+#accounttype{
+    visibility: hidden;
+}
+
+#upForm{
+    visibility: hidden;
+}
+
+#interestForm{
+    visibility: hidden;
+}
+
+#submitForm{
+    visibility: hidden;
+}

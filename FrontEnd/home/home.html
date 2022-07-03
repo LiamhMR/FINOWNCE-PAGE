@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- MENÚ -->
+        <script src="../js/jquery.js"></script> 
+        <script src="../js/loadhtml.js" async></script>
+        
+        <div data-include="/../menu.html"></div>
+        <link rel="stylesheet" href="/css/reset.css" type="text/css">
+        <!-- FIN MENÚ -->
+        <link rel="stylesheet" href="/css/home.css" type="text/css">
+        <script src="/js/getLang.js"></script>
+        <script src="/js/getFromURL.js"></script>
+        <script src="/js/screenwatch.js"></script>
+
+    </head>
+    
+    <body onload="checkfield('Nombre');checkfield('Email');">
+        <div id="fatherdiv"><br>
+            <!--HOME-->
+            <div id="presentation">
+                <div id="texto">
+                    <span id="title"></span>
+                    <span id="explanation"></span>
+                </div>
+                <div id="image">
+                    <!--IMAGEN-->
+                    <img id="img" src="/img/NNLogo.png">
+                </div>
+            </div> 
+
+            <div id="herramientas">
+                <div>
+                    <img src=""> 
+                    <span></span>
+                </div>
+                
+                <div>
+                    <img src=""> 
+                    <span></span>
+                </div>
+
+                <div>
+                    <img src=""> 
+                    <span></span>
+                </div>
+
+                <div>
+                    <img src=""> 
+                    <span></span>
+                </div>
+            </div>
+
+            <div id="easysign">
+                <span id="suggest"></span>
+                <form action="/home/signupf.html" id="easyform" onsubmit="easysubmit()">
+                    <label for="nombre"></label>
+                    <input class="inputForm" type="text" id="Nombre" onfocus="setfield('Nombre')" onfocusout="setfield('Nombre',false)" name="name" value="Nombre" required minlenght="6" maxlength="20">
+
+                    <label for="email"></label>
+                    <input class="inputForm" type="email" id="Email" onfocus="setfield('Email')" onfocusout="setfield('Email',false)" name="mail" value="Email"required minlenght="6" maxlength="50">
+                    
+                    <label for="submit"></label>
+                    <input class="inputForm" type="submit" id="submit" value="REGISTRARSE">
+                    <li style="list-style-type: none;">
+                        <label for="submit"></label>
+                        <input class="inputForm" type="submit" id="submitPhone" value="REGISTRARSE">
+                    </li>
+
+                    <input id="langInput" name="lang" style="visibility: hidden;">
+                </form>
+            </div>
+
+        </div>
+
+        <script src="../js/submit.js"></script>
+
+    </body>
+
+    <footer>
+        <script>
+            //LANGUAJE
+            getText(lang,"start","Home","title","title");
+            getText(lang,"start","Home","text","explanation");
+
+            getText(lang,"start","Home","suggestion","suggest");
+            setValue(lang,"start","Home","submit","submit");
+
+            //RESPONSIVE
+                    //id
+            setStyle(["presentation","img","easyform","easysign","submitLi"],
+                    //DISPLAY
+                    ["grid",,"grid",,],
+                    ["inline-flex",,"inline-flex",,],
+                    //FLOAT - USE ":" AT THE START FOR TEXT-ALIGN
+                    [,"none",,,],
+                    [,"right",,,],
+                    //WIDTH - USE ":" AT THE START FOR PADDING
+                    [,,,,],
+                    [,,,,]);
+
+            setVisibility(
+                    //[SHOW ON PHONE STYLE],[HIDE ON PHONE STYLE]
+                    ["submitPhone"],["submit"],
+                    //[SHOW ON DESKTOP STYLE],[HIDE ON DESKTOP STYLE]
+                    ["submit"],["submitPhone"]);
+            
+            if (document.readyState){
+                document.getElementById("langInput").value=shortln;
+            }
+        </script>
+    </footer>
+</html>

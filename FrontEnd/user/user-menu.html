@@ -1,0 +1,79 @@
+<!-- VOY A REALIZAR UN MENÚ, así que este corresponderá al header-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <div id="gc"></div>
+        <script src="/js/global.js"></script>
+        <script src="/js/screenwatch.js"></script>
+        <link rel="stylesheet" href="/css/stylesLii.css" type="text/css">
+        <script src="/js/getLang.js"></script>
+        <script src="/js/getFromURL.js"></script>
+    </head>
+
+    <body>
+        <!--MENU DESKTOP-->
+        <div id="uptab">
+            <div id="menu">
+                <ul id="stn">
+                    <div id="icon"><img src="/img/NNLogo.png"></div>
+                    <li class="menuLi"><a id="summ" href="#" onclick="window.location.replace('/user/summary.html?lang='+shortln+'&OUT='+tkn)"></a></li>
+                    <li class="menuLi"><a id="cc" href="#" onclick="window.location.replace('/user/subpages/ccount.html?lang='+shortln+'&OUT='+tkn)"></a></li>
+                    <li class="menuLi"><a id="inv" href="#" onclick="window.location.replace('/user/subpages/invest.html?lang='+shortln+'&OUT='+tkn)"></a></li>
+                    <li class="menuLi"><a id="supp" href=""></a></li>
+                    <li class="menuLi"><a id="logout" href="#" onclick="window.location.replace('/home/home.html?lang='+shortln)"></a></li>
+                    <li class="menuLi"><select class="selectSt" id="ln" onclick="updateLang('ln','&OUT='+tkn)">
+                        <option id="langEs" value="es"></option>
+                        <option id="langEn" selected value="en"></option>
+                    </select></li>
+                </ul>   
+            </div>
+        </div>
+
+        <!--MENU ESTRECHO-->
+        <div class="pos-f-t" id="phonetab">
+            <div class="collapse" id="navbarToggleExternalContent">
+                <div class="bg-dark p-4">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#"></a>
+                    </div>
+                    <div class="navbar-nav">
+                    <ul class="nav navbar-nav">
+                        <li class="tightTab"><a id="summNav" class="nav-item nav-link" href="#" onclick="window.location.replace('/user/summary.html?lang='+shortln+'&OUT='+tkn)"></a></li>
+                        <li class="tightTab"><a id="ccNav" class="nav-item nav-link" href="#" onclick="window.location.replace('/user/subpages/ccount.html?lang='+shortln+'&OUT='+tkn)"></a></li>
+                        <li class="tightTab"><a id="invNav" class="nav-item nav-link" href="#" onclick="window.location.replace('/user/subpages/invest.html?lang='+shortln+'&OUT='+tkn)"></a></li>
+                        <li class="tightTab"><a id="suppNav" class="nav-item nav-link" href=""></a></li>
+
+                        <li class="tightTab"><select id="lnNav" onclick="updateLang('lnNav','&OUT='+tkn)">
+                            <option id="langEsNav" value="es"></option>
+                            <option id="langEnNav" selected value="en"></option>
+                        </select></li>
+                    </ul>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="navbar navbar-dark bg-dark">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="navbar-brand" style="font-size: 40px;background-color:#8e7aa5;border-radius: 10px;"><a href="#" onclick="window.location.replace('/home/home.html?lang='+shortln)"id="logoutNav"><span class="glyphicon glyphicon-user"></span></a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <!--FIN MENU ESTRECHO-->
+        <script>
+            initMenu();
+            doLang("getMenu",lang,"user",['summ','summNav'],"","",0);
+            doLang("getMenu",lang,"user",['cc','ccNav'],"","",1);
+            doLang("getMenu",lang,"user",['inv','invNav'],"","",2);
+            doLang("getMenu",lang,"user",['supp','suppNav'],"","",3);
+            doLang("getMenu",lang,"user",['logout','logoutNav'],"","",4);
+            doLang("getLang",lang,"",["langEs","langEsNav"],"","",0);
+            doLang("getLang",lang,"",["langEn","langEnNav"],"","",1);
+            setSelect("ln",getParameterByName("lang"));
+            setSelect("lnNav",getParameterByName("lang"));
+        </script>
+    </body>
+</html>

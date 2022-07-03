@@ -1,0 +1,55 @@
+{
+    "languajes":["Spanish","English"],
+    "start":{
+        "menu":["Home","About us","Contact","Log in","Sign up"],
+
+        "Home" : {
+            "title":"FINOWNCE",
+            "text":"A web application of financial advice, where you could get all the tools to carry your counts, [...] ",
+            "suggestion":"Sign up to get all the benefits!",
+            "name":"Name",
+            "mail":"Email",
+            "submit":"Sign up"
+        },
+        "AboutUs" : {},
+        "ContactUs":{
+            "title":"Send us your proposal!",
+            "bussines":"Name or bussines name",
+            "mail":"Email",
+            "issue":"Issue",
+            "text":"Message",
+            "submit":"Send messsage"
+        },
+        "Login": {
+            "user":["User","User"],
+            "pass":["Password","Password"],
+            "submit": "LOG IN",
+            "span":"¿You haven't an account?",
+            "signUpButton":"¡SIGN UP!",
+            "testLogIn":"Test log"
+        },
+        "Signup":{
+            "name":["Name","Name"],
+            "user":["User","User"],
+            "rut":["RUN","12.345.678-9"],
+            "email":["Email","example@gmail.com"],
+            "pass":["Password","password"],
+            "submit":"Sign up"
+        }
+    },
+
+    "user":{
+        "menu":["Summary","Counts","Investment","Support","Log out","Add count","Add invest"],
+        "summary":{},
+        "ccount":{
+            "greet":"Hello ",
+            "ccTH":"Accounts",
+            "invTH":"Invests",
+            "graphCC":"",
+            "graphINV":""
+        },
+        "invest":{},
+        "support":{},
+        "logout":{}
+    }
+}

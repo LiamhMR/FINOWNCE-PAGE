@@ -1,0 +1,53 @@
+body{
+    /*background-color: rgb(168, 156, 214);*/
+    background: rgb(110,32,237);
+    background: linear-gradient(90deg, rgba(110,32,237,1) 0%, rgba(176,38,255,1) 78%);
+}
+
+#hi,#total{
+    text-align: center;
+    color: aliceblue;
+    font-size: 30px;
+    padding: 10px;
+}
+
+.summ{
+    float:inline-start;
+    text-align: center;
+    padding-left: 10%;
+    display: flex;
+}
+/*
+table {
+    text-align: center;
+    width: 300px;
+    border-collapse: collapse;
+}
+*/
+table, th, td {
+    width: 40%;
+    float:none;
+
+
+    text-align: center;
+    color: aliceblue;
+    background-color: rgb(75, 52, 71);
+    border-radius: 15px;
+
+}
+th, td {
+    padding: 10px;
+}
+th{
+    font-size: 20px;
+}
+
+td{
+    font-size: 15px;
+}
+
+#graph{
+    size: 600px;
+    width: 80%;
+    padding-right: 40%;
+}

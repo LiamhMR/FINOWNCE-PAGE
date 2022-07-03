@@ -1,0 +1,117 @@
+#uptab
+{
+    padding-top: 1px;
+    width: 100%;
+    position: fixed;
+    padding-left: 10px;
+    display: block;
+    border: 1px solid black;
+    background-color: #5e4c72;
+}
+
+#icon{
+    list-style-type: none;
+    float: left;
+    background-color:#5e4c72;
+}
+
+#uptab img{
+    width: 40px;
+    size: 20%;
+    border-radius: 15px;
+    border: 1px solid white;
+}
+
+#menu{
+    padding-left: 10px;
+    list-style-type: none;
+    display: grid;
+    text-align: center;
+    border: #04222E;
+    /*padding-top: 10px;*/
+}
+
+ul{
+    list-style-type: none;
+    padding-top: 10px;
+    padding-right: 100px;
+    padding-left: 15px;
+    text-decoration: none;
+    
+    /*border: 1px solid black;
+    padding-top: 30px;*/
+}
+
+.menuLi{
+    list-style-type: none;
+    float: left;
+    text-decoration: none;
+
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border: 1px solid #04222E;
+    color: aliceblue;
+    background-color:#8e7aa5;
+    font-size: 30px;
+    border-radius: 3px;
+}
+
+.tightTab{
+    list-style-type: none;
+    float: left;
+    text-align: center;
+    border: 1px solid #04222E;
+    background-color:#8e7aa5;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    color: aliceblue;
+    font-size: 60px;
+    border-radius: 15px;
+}
+
+#lnNav{
+    background-color:#8e7aa5;
+    color: aliceblue;
+    border-radius: 10px;
+    font-size: 60px;
+}
+
+.selectSt{
+    list-style-type: none;
+    float: left;
+    text-decoration: none;
+
+    border: 1px solid #04222E;
+    color: aliceblue;
+    background-color:#8e7aa5;
+    font-size: 24px;
+    border-radius: 3px;
+}
+
+#mini {
+    padding-left: 55px;
+}
+
+#mini li{
+    list-style-type: none;
+    float: left;
+    text-decoration: none;
+    padding-left: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 15px;
+    border: 1px solid #04222E;
+    color: aliceblue;
+    background-color:#8e7aa5;
+    font-size: 15px;
+    border-radius: 3px;
+}
+
+a{
+    text-decoration: none;
+    color: aliceblue;
+}

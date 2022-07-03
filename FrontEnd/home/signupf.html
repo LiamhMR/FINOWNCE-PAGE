@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <!-- MENÚ -->
+        <script src="../js/jquery.js"></script> 
+        <script src="../js/loadhtml.js" async></script>
+        
+        <div data-include="/../menu.html"></div>
+        <link rel="stylesheet" href="/css/reset.css" type="text/css">
+        <link rel="stylesheet" href="/css/home.css" type="text/css">
+        <link rel="stylesheet" href="/css/signup.css" type="text/css">
+        <!-- FIN MENÚ -->
+        <script src="/js/getFromURL.js"></script>
+        <script src="/js/getLang.js"></script>
+    </head>
+    
+    <body onload="">
+        <br><br><br><br>
+        <form id="signUpForm">
+            <label for:"Nombre" id="NombreLabel"></label>
+            <input class="inputForm" type="text" id="Nombre" name="nombre" value="Nombre" onfocus="setfield('Nombre')" onfocusout="setfield('Nombre',false)" required minlength="3" maxlength="20" size="10">
+            
+            <label for:"Rut" id="RutLabel"></label>
+            <input class="inputForm" type="text" id="Rut" name="Rut" value="12345678-9" onfocus="setfieldexample('Rut','12345678-9');delStrRut('Rut',false);" onfocusout="setfieldexample('Rut','12345678-9',false);delStrRut('Rut',true);checkrut('Rut');" required minlength="9" maxlength="12" size="10">
+
+            <label for:"Usuario" id="UserLabel"></label>
+            <input class="inputForm" type="text" id="Usuario" name="Usuario" value="Usuario" onclick="setfield('Usuario')" onfocusout="setfield('Usuario',false)" required minlength="3" maxlength="20" size="10">
+
+            <label for:"email" id="EmailLabel"></label>
+            <input class="inputForm" type="email" id="Email" name="example@mail.com" value="example@mail.com" onclick="setfieldexample('Email','example@mail.com')" onfocusout="setfieldexample('Email','example@mail.com',false)" required size="10">
+
+            <label for:"pass" id="PassLabel"></label>
+            <input class="inputForm" type="password" id="Pass" name="Contraseña" value="Contraseña" onclick="setfieldexample('Pass','Contraseña')" onfocusout="setfieldexample('Pass','Contraseña',false)" required minlength="6" maxlength="20" size="10">
+            <br><br><br>
+            <input class="inputForm" type="submit" id="submit" onclick="checkRutSubmit('Rut');checksubmit(['Nombre','Rut','Usuario','Email','Pass']);" value="REGISTRARSE">
+            
+            <label for:"hideFocus" id="hideFocusLabel"></label>
+            <input class="inputForm" id="hideFocus" style="visibility: hidden;" >
+        </form>
+
+        <script src="../js/submit.js"></script>
+        <script>
+            checkfield('Nombre');checkfield('Usuario');
+            checkfieldexample('Email','example@mail.com');
+            checkfieldexample('Pass','Contraseña');
+            checkfieldexample('Rut','12345678-9');fillVars();
+
+            getForm(lang,"start","Signup","name",0,"NombreLabel");
+            getForm(lang,"start","Signup","name",1,"Nombre");
+            getForm(lang,"start","Signup","rut",0,"RutLabel");
+            getForm(lang,"start","Signup","rut",1,"Rut");
+            getForm(lang,"start","Signup","user",0,"UserLabel");
+            getForm(lang,"start","Signup","user",1,"Usuario");
+            getForm(lang,"start","Signup","email",0,"EmailLabel");
+            getForm(lang,"start","Signup","email",1,"Email");
+            getForm(lang,"start","Signup","pass",0,"PassLabel");
+            getForm(lang,"start","Signup","pass",1,"Pass");
+
+            setValue(lang,"start","Signup","submit","submit");
+        </script>
+    </body>
+</html>

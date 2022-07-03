@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- MENÚ -->
+        <script src="../js/jquery.js"></script> 
+        <script src="../js/loadhtml.js" async></script>
+        
+        <div data-include="/../menu.html"></div>
+        <link rel="stylesheet" href="/css/reset.css" type="text/css">
+        <!-- FIN MENÚ -->
+        <link rel="stylesheet" href="/css/home.css" type="text/css">
+        <script src="/js/getLang.js"></script>
+        <script src="/js/getFromURL.js"></script>
+        <link rel="stylesheet" href="/css/signup.css" type="text/css">
+        <link rel="stylesheet" href="/css/stylesLii.css" type="text/css">
+    </head>
+    <body>
+        <form action="#">
+            <span id="suggest"></span>
+            <label id="bussinesLabel" for="bussines"></label>
+            <input class="inputForm" id="bussines" type="email">
+            <label id="mailLabel" for="mail"></label>
+            <input class="inputForm" id="mail" type="email">
+            <label id="issueLabel" for="issue"></label>
+            <input class="inputForm" id="issue" type="text">
+            <label id="messageLabel" for="message"></label>
+            <input class="inputForm" id="message" type="text">
+            <br><br>
+            <input class="inputForm" id="submit" type="submit" value="CONTACTAR">
+        </form>
+
+        <script>
+            getText(lang,"start","ContactUs","title","suggest");
+            getText(lang,"start","ContactUs","bussines","bussinesLabel");
+            getText(lang,"start","ContactUs","mail","mailLabel");
+            getText(lang,"start","ContactUs","issue","issueLabel");
+            getText(lang,"start","ContactUs","text","messageLabel");
+            setValue(lang,"start","ContactUs","submit","submit");
+        </script>
+    </body>
+</html>

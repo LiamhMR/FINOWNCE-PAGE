@@ -1,0 +1,49 @@
+{
+    "languajes":["Español","Inglés"],
+    "start":{
+        "menu":["Inicio","Sobre nosotros","Contacto","Ingresar","Registrarse"],
+
+        "Home" : {
+            "title":"FINOWNCE",
+            "text":"Una aplicación web de asesoramiento financiero, que le otorga las herramientas a lo usuarios para poder llevar sus cuentas, teniendo la posibilidad de añadir ingresos y egresos, las distintas fuentes y cuentas de dinero, así como poder llevar registro de sus inversiones. FINOWNCE es una útil herramienta de contabilidad que automatiza los registros y contiene una interfaz amigable para que pueda llevar sus registros. […]",
+            "suggestion":"Regístrate y ten acceso a todas las herramientas!",
+            "name":"Nombre",
+            "mail":"Email",
+            "submit":"Registrarse"
+        },
+        "AboutUs" : {},
+        "ContactUs":{
+            "title":"Envíanos tu propuesta o mensaje",
+            "bussines":"Nombre o empresa",
+            "mail":"Correo electrónico",
+            "issue":"Asunto",
+            "text":"Mensaje",
+            "submit":"ENVIAR"
+        },
+        "Login": {
+            "user":["Usuario","Usuario"],
+            "pass":["Contraseña","Contraseña"],
+            "submit": "INGRESAR",
+            "span":"¿No tienes cuenta?",
+            "signUpButton":"¡REGÍSTRATE!",
+            "testLogIn":"Ingreso de prueba"
+        },
+        "Signup":{
+            "name":["Nombre","Nombre"],
+            "user":["Usuario","Usuario"],
+            "rut":["RUN","12.345.678-9"],
+            "email":["Email","ejemplo@gmail.com"],
+            "pass":["Contraseña","contraseña"],
+            "submit":"Registrarse"
+        }
+    },
+
+    "user":{
+        "menu":["Resumen","Cuentas","Inversiones","Contactar soprote","Cerrar sesión","Añadir cuenta","Añadir activo"],
+        "summary":{},
+        "ccount":{},
+        "invest":{},
+        "support":{},
+        "logout":{}
+    }
+}

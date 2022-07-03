@@ -1,0 +1,12 @@
+{
+    "allUsers": {
+        "users": {
+            "testuser1": ["uMdHQGMxp^", "123456", true, 5, 0],
+            "testuser2": ["", "123456", true, 0, null],
+            "testuser3": ["", "123456", true, 0, null]
+        },
+        "logs": {
+            "0": "testuser1"
+        }
+    }
+}

@@ -1,0 +1,83 @@
+<!-- VOY A REALIZAR UN MENÚ, así que este corresponderá al header-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="/js/getLang.js"></script>
+        <script src="/js/getFromURL.js"></script>
+        <div id="gc"></div>
+        <script src="/js/global.js"></script>
+        <script src="/js/screenwatch.js"></script>
+        <link rel="stylesheet" href="/css/stylesLii.css" type="text/css">
+    </head>
+
+    <body>
+        <!--MENU DESKTOP-->
+        <div id="uptab">
+            <nav>
+                <div id="icon">
+                    <a href="#" onclick="window.location.replace('/home/home.html?lang='+shortln)"><img id="logo" src="/img/NNLogo.png"></a>
+                </div>
+                <div id="menu">
+                    <ul id="stn">
+                        <li class="menuLi"><a href="#" onclick="window.location.replace('/home/home.html?lang='+shortln)" id="Home"></a></li>
+                        <li class="menuLi"><a href="#" onclick="window.location.replace('/home/aboutus.html?lang='+shortln)" id="Aboutus"></a></li>
+                        <li class="menuLi"><a href="#" onclick="window.location.replace('/home/contactus.html?lang='+shortln)" id="Contactus"></a></li>
+                        <li class="menuLi"><a href="#" onclick="window.location.replace('/home/loginf.html?lang='+shortln)" id="Login"></a></li>
+                        <li class="menuLi"><select class="selectSt" id="ln" onclick="updateLang('ln')">
+                            <option id="langEs" value="es"></option>
+                            <option id="langEn" selected value="en"></option>
+                        </select></ul>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        
+        <!--MENU ESTRECHO-->
+        <div class="pos-f-t" id="phonetab">
+            <div class="collapse" id="navbarToggleExternalContent">
+                <div class="bg-dark p-4">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#"></a>
+                    </div>
+                    <div class="navbar-nav">
+                    <ul class="nav navbar-nav">
+                        <li class="tightTab"><a class="nav-item nav-link" href="#" onclick="window.location.replace('/home/home.html?lang='+shortln)" id="HomeNav"></a></li>
+                        <li class="tightTab"><a class="nav-item nav-link" href="#" onclick="window.location.replace('/home/aboutus.html?lang='+shortln)" id="AboutusNav"></a></li>
+                        <li class="tightTab"><a class="nav-item nav-link" href="#" onclick="window.location.replace('/home/contactus.html?lang='+shortln)" id="ContactusNav"></a></li>
+                        <li class="tightTab"><select id="lnNav" onclick="updateLang('lnNav')">
+                            <option id="langEsNav" value="es"></option>
+                            <option id="langEnNav" selected value="en"></option>
+                        </select></li>
+                    </ul>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="navbar navbar-dark bg-dark">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <ul class="nav navbar-nav navbar-right" style="display:inline;">
+                    <li class="navbar-brand" style="font-size: 40px;background-color:#8e7aa5;border-radius: 10px;"><a href="#" onclick="window.location.replace('/home/signupf.html?lang='+shortln)" id="SignupNav"><span class="glyphicon glyphicon-user"></span></a></li>
+                    <li class="navbar-brand" style="font-size: 40px;background-color:#8e7aa5;border-radius: 10px;"><a href="#" onclick="window.location.replace('/home/loginf.html?lang='+shortln)" id="LoginNav"><span class="glyphicon glyphicon-log-in"></span></a></li>
+                </ul>
+            </nav>
+        </div>
+        
+        <br><br>
+        <script>
+            initMenu();
+            /* doLang("action",const lang,"tier",[Array<id>],"page","collection",index) */
+            doLang("getMenu",lang,"start",['Home','HomeNav'],"","",0);
+            doLang("getMenu",lang,"start",['Aboutus','AboutusNav'],"","",1);
+            doLang("getMenu",lang,"start",['Contactus','ContactusNav'],"","",2);
+            doLang("getMenu",lang,"start",['Login','LoginNav'],"","",3);
+            doLang("getMenu",lang,"start",['SignupNav'],"","",4);
+            doLang("getLang",lang,"",["langEs","langEsNav"],"","",0);
+            doLang("getLang",lang,"",["langEn","langEnNav"],"","",1);
+            setSelect("ln",getParameterByName("lang"));
+            setSelect("lnNav",getParameterByName("lang"));
+        </script>
+
+    </body>
+</html>

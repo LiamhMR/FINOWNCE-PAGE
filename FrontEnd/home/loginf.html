@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- MENÚ -->
+        <script src="../js/jquery-3.1.1.min.js"></script> 
+        <script src="../js/loadhtml.js" async></script>
+        
+        <div data-include="/../menu.html"></div>
+        <link rel="stylesheet" href="/css/reset.css" type="text/css">
+        <link rel="stylesheet" href="/css/home.css" type="text/css">
+        <!-- FIN MENÚ -->
+        <link rel="stylesheet" href="/css/login.css" type="text/css">
+        <script src="/js/getLang.js"></script>
+        <script src="/js/getFromURL.js"></script>
+        <script src="/js/login.js"></script>
+
+    </head>
+    
+    <body onload="">
+        <br><br><br><br>
+        <form action="#" onsubmit="checkLogin('nick','pass',shortln)">
+            <label for:"nick" id="nickLabel"></label>
+            <input class="inputForm" type="text" id="nick" name="Usuario" value="Usuario" onfocus="setfieldexample('nick','Usuario')" onfocusout="setfieldexample('nick','Usuario',false)" required minlength="3" maxlength="20" size="10">
+
+            <label for:"pass" id="passLabel"></label>
+            <input class="inputForm" type="password" id="pass" name="Codigo Secreto" value="Contraseña" onfocus="setfieldexample('pass','Contraseña')" onfocusout="setfieldexample('pass','Contraseña',false)" required minlength="6" maxlength="20" size="10">
+            <br><br><br>
+            <input class="inputForm" type="button" id="submit" value="INGRESAR" onclick="checksubmit(['nick','pass']);checkLogin('nick','pass',shortln)">
+
+            <label for:"hideFocus" id="hideFocusLabel"></label>
+            <input class="inputForm" id="hideFocus" style="visibility: hidden;" >
+        </form>
+
+        <br><br><br><br>
+        <div class="cajita">
+            <span id="suggest"></span>
+            <li id="login"><a id="signUpButton" href="#" onclick="window.location.replace('/home/signupf.html?lang='+shortln)"></a></li>
+            <!--EASY TEMP ACCESS TO -->
+            <li id="login"><a id="testLogIn" href="#" onclick="window.location.replace('/user/summary.html?lang='+shortln+'&OUT=outex1')"></a></li>
+        </div>
+
+        <script src="/js/submit.js"></script>
+
+        <script>
+            checkfieldInit("nick");
+            checkfieldInit("pass");
+
+            getForm(lang,"start","Login","user",0,"nickLabel");
+            getForm(lang,"start","Login","user",1,"nick");
+            getForm(lang,"start","Login","pass",0,"passLabel");
+            getForm(lang,"start","Login","pass",1,"pass");
+
+            getText(lang,"start","Login","span","suggest");
+            getText(lang,"start","Login","signUpButton","signUpButton");
+            getText(lang,"start","Login","testLogIn","testLogIn");
+            setValue(lang,"start","Login","submit","submit");
+        </script>
+    </body>
+</html>

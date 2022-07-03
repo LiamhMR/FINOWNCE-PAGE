@@ -1,0 +1,54 @@
+form{
+    padding-left:30px;
+    display: block;
+    text-align: center;
+}
+
+label{
+    padding-right: 60px;
+    display: block;
+    font-size: 30px;
+}
+
+span{
+    padding-left: 30px;
+    display: block;
+    text-align: center;
+}
+
+input{
+    width: 300px;
+    font-size: 30px;
+    color: rgb(117, 117, 117);
+}
+
+body{
+    background-color: rgb(168, 156, 214);
+}
+
+.cajita{
+    text-align: center;
+    display:grid;
+}
+
+#login{
+    display: block;
+    list-style-type: none;
+    float: left;
+    text-decoration: none;
+    text-align: center;
+
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border: 1px solid #04222E;
+    color: aliceblue;
+    background-color:#8e7aa5;
+    font-size: 30px;
+    border-radius: 3px;
+}
+
+#submit {
+    color: rgb(46, 44, 44);
+}

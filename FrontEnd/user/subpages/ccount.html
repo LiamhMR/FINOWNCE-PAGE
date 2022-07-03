@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <!-- MENÚ -->
+        <script src="../../js/jquery.js"></script> 
+        <script src="../../js/loadhtml.js"></script>
+        <div data-include="../../user/user-menu.html"></div>
+        <br><br>
+        <div data-include="../../user/cc-menu.html"></div>
+        <!-- FIN MENÚ -->
+        <link rel="stylesheet" href="/css/reset.css" type="text/css">
+        <link rel="stylesheet" href="/css/summary.css" type="text/css">
+        <link rel="stylesheet" href="/css/ccount.css" type="text/css">
+        <script src="/js/cccreate.js"></script>
+        <script src="/js/getFromURL.js"></script>
+    </head>
+    <body onload="verifyInput('kindcc',['Vista','Corriente'],'save')">
+        
+        <div id="accounttype">
+            <form id="newCc" action="#" onsubmit="addButton('ccName');setvisible(['accounttype','interestForm'],false);resetValues(['ccName','kindcc','reajuste'])">
+                <div class="minform" id="upform">
+                    <label id="ccNameLabel" for="ccName">Nombre de la cuenta</label>
+                    <input type="text" id="ccName" required minlength="2">
+                    <label id="kindccLabel" for="kindcc">Tipo de cuenta</label>
+                    <select id="kindcc" onchange="onblockshow(['interestForm'],verifyInput('kindcc',['Vista','Corriente'],'save'),'reajuste')">
+                        <option value=""></option>
+                        <option value="Vista">Vista</option>
+                        <option value="Corriente">Corriente</option>
+                        <option value="Ahorro">Ahorro</option>
+                    </select>
+                </div>
+
+                <div class="midform" id="interestForm">
+                    <label class="interest" id="reajusteLabel for="factor">Reajuste (%)</label>
+                    <input class="interest" type="number" onchange="verifyInput('reajuste',[''],'save',false)" id="reajuste" min="0" max="100" minlength="0">
+                </div>
+
+                <input type="submit" id="save" value="GUARDAR">
+
+            </form>
+        </div>
+
+        <script src="" async defer></script>
+    </body>
+</html>
