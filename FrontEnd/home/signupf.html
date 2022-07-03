@@ -17,7 +17,7 @@
     
     <body onload="">
         <br><br><br><br>
-        <form id="signUpForm">
+        <form id="signUpForm" onsubmit="return false">
             <label for:"Nombre" id="NombreLabel"></label>
             <input class="inputForm" type="text" id="Nombre" name="nombre" value="Nombre" onfocus="setfield('Nombre')" onfocusout="setfield('Nombre',false)" required minlength="3" maxlength="20" size="10">
             
@@ -33,7 +33,7 @@
             <label for:"pass" id="PassLabel"></label>
             <input class="inputForm" type="password" id="Pass" name="Contraseña" value="Contraseña" onclick="setfieldexample('Pass','Contraseña')" onfocusout="setfieldexample('Pass','Contraseña',false)" required minlength="6" maxlength="20" size="10">
             <br><br><br>
-            <input class="inputForm" type="submit" id="submit" onclick="checkRutSubmit('Rut');checksubmit(['Nombre','Rut','Usuario','Email','Pass']);" value="REGISTRARSE">
+            <input class="inputForm" type="submit" id="submit" onclick="checkRutSubmit('Rut');checksubmit(['Nombre','Rut','Usuario','Email','Pass']);SubmitSign('Nombre','Rut','Usuario','Email','Pass');" value="REGISTRARSE">
             
             <label for:"hideFocus" id="hideFocusLabel"></label>
             <input class="inputForm" id="hideFocus" style="visibility: hidden;" >

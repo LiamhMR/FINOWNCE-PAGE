@@ -76,6 +76,8 @@ const requireUser = () => {
         }
     };
 };
+//400 ->token no coincide
+//401 ->usuario no coincide
 const requireOUT = () => {
     return (req, res, next) => {
         let token = req.headers["token"].split("_");
@@ -87,8 +89,8 @@ const requireOUT = () => {
                 next();
             }
             else {
+                console.log("Missmatched token");
                 res.status(400).send("Invalid token");
-                console.log("Token incorrecto");
             }
         }
         catch (error) {
@@ -97,14 +99,16 @@ const requireOUT = () => {
         }
     };
 };
+//GET
+//400 ->missmatched keys
 const requireInfo = () => {
     return (req, res, next) => {
-        let user = req.headers["user"];
+        let ln = (req.headers["token"]).split("_")[1];
+        let user = data.allUsers.logs[ln];
         let order = req.headers["order"];
-        let lmt = req.headers["lmt"];
-        console.log(user);
+        //console.log(user);
         if ((user == undefined) || (order == undefined)) {
-            res.status(406).send("missed keys");
+            res.status(400).send("missed keys");
         }
         else {
             next();
@@ -132,13 +136,14 @@ app.get('/userload', requireUser(), (req, res, next) => {
     //res.sendFile(path.join(__dirname,jssub+'../../FrontEnd/user/summary.html'));
     console.log("Capture login:" + req.headers["user"]);
 });
-//GET USER NICK
+//GET USER INFO
 app.get('/userinfo', requireOUT(), requireInfo(), (req, res, next) => {
-    console.log(req.header["ln"]);
-    let ln = req.headers["ln"];
-    res.status(200).send(data.allUsers.logs[ln]);
+    console.log("matched token & info");
+    let ln = (req.headers["token"]).split("_")[1];
+    let user = data.allUsers.logs[ln];
+    res.status(200).send(db.db[user]);
 });
-//LOAD USER INFO
+//LOAD USER NICK
 app.get("/usernick", requireOUT(), (req, res, next) => {
     console.log("matched token");
     let token = req.headers["token"].split("_");
@@ -159,7 +164,11 @@ function errorHandler(err, req, res, any, next) {
 function createOUT() {
     let randToken = "";
     for (let i = 0; i <= 9; i++) {
-        let letter = String.fromCharCode(Math.random() * (65 - 122) + 122);
+        let randnum = Math.random() * (65 - 122) + 122;
+        if (randnum == 95 || randnum == 96) {
+            randnum = randnum - 4;
+        }
+        let letter = String.fromCharCode(randnum);
         randToken = randToken + letter;
     }
     return randToken;
@@ -169,6 +178,9 @@ function getLastLog() {
     return last;
 }
 //>>>>>>>>>>>>>>>>> POST <<<<<<<<<<<<<<<<<<<
+//402 -> Datos incompletos
+//401 -> Usuario en uso
+//402 -> Mail en uso
 const requirelmnts = () => {
     return (req, res, next) => {
         let name = req.headers["name"];
@@ -177,16 +189,16 @@ const requirelmnts = () => {
         let usernick = req.headers["user"];
         let password = req.headers["pass"];
         if ((name == undefined) || (rut == undefined) || (mail == undefined) || (usernick == undefined) || (password == undefined)) {
-            res.status(413).send("incomplete");
+            res.status(400).send("incomplete");
         }
         else {
             let existnick = db.db[usernick];
             let existmail = db.db["mails"][mail];
             if (existnick != undefined) {
-                res.status(414).send("Nick in use");
+                res.status(401).send("Nick in use");
             }
             else if (existmail != undefined) {
-                res.status(415).send("mail in use");
+                res.status(402).send("mail in use");
             }
             else {
                 next();
@@ -210,7 +222,9 @@ function addUser(req) {
     "ccounts":[],
     "invests":[]
     }`;
-    let objuser = `["${createOUT()}","${password}",true,0]`;
+    //let objuser=`["${createOUT()}","${password}",true,0]`;
+    let objuser = [createOUT(), password, true, 0];
+    console.log(objuser);
     db.db[usernick] = JSON.parse(objinfo);
     db.db["mails"][mail] = true;
     data.allUsers["users"][usernick] = objuser;

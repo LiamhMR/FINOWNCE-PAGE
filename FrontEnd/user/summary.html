@@ -16,6 +16,7 @@
     </head>
     <body>
         <h1 id="hi"></h1>
+        <h1 id="usernick"></h1>
         <h1 id="total">TOTAL:$</h1>
         <div class="summ" id="countSummary">
             <div class="table" id="ccTable">
@@ -35,12 +36,13 @@
 
         <script>
             //getUser(tempdb,tkn);
-            //setState("total",tempdb,tkn)
             //getCCSummary(tempdb,tkn);
             //getINVSummary(tempdb,tkn);
 
             if (document.readyState){
-                getText(lang,"user","ccounts","greet","hi");
+                getText(lang,"user","ccount","greet","hi");
+                requestNick();
+                setState("total");
                 //make all langs parse, wait the ready state for the summary table ids.
             };
         </script>

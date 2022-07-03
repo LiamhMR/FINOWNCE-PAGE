@@ -231,3 +231,45 @@ function checkRutSubmit(ident) {
         alert("El rut se ha ingresado incorrectamente.");
     }
 }
+function SubmitSign(nombre, rut, nick, mail, pass) {
+    var name = document.getElementById(nombre);
+    var rutnum = document.getElementById(rut);
+    var user = document.getElementById(nick);
+    var email = document.getElementById(mail);
+    var password = document.getElementById(pass);
+    var req = new XMLHttpRequest();
+    req.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            if (shortln == "es") {
+                alert("¡Cuenta creada con éxito!");
+            }
+            else {
+                alert("¡Successfully account creation!");
+            }
+            window.location.replace("../home/loginf.html?lang=" + shortln);
+        }
+        if ((this.status == 401)) {
+            if (shortln == "es") {
+                alert("El usuario se encuentra en uso");
+            }
+            else {
+                alert("User nick in use");
+            }
+        }
+        if ((this.status == 402)) {
+            if (shortln == "es") {
+                alert("El mail se encuentra registrado");
+            }
+            else {
+                alert("Mail in use");
+            }
+        }
+    };
+    req.open("POST", "/newuser", true);
+    req.setRequestHeader("name", name.value);
+    req.setRequestHeader("rut", rutnum.value);
+    req.setRequestHeader("mail", email.value);
+    req.setRequestHeader("user", user.value);
+    req.setRequestHeader("pass", password.value);
+    req.send(null);
+}

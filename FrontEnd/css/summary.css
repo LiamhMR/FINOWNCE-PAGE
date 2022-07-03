@@ -4,7 +4,7 @@ body{
     background: linear-gradient(90deg, rgba(110,32,237,1) 0%, rgba(176,38,255,1) 78%);
 }
 
-#hi,#total{
+#hi,#total,#usernick{
     text-align: center;
     color: aliceblue;
     font-size: 30px;
