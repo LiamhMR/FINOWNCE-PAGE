@@ -4,6 +4,10 @@ function addButton(ident:string){
     var input:any=document.getElementById(ident);
     const newLi = document.createElement("li");
     const newA = document.createElement("a");
+    newA.href="#";
+    newA.onclick=function(){
+        window.location.replace("/FrontEnd/user/subpages/count-wr.html?lang="+shortln+"&out="+tkn+"&cc="+input.value);
+    };
     const currentLi = document.getElementById("mini");
     const aText = document.createTextNode(input.value);
     newA.appendChild(aText);
@@ -16,20 +20,21 @@ function addButton(ident:string){
  * @param ident ->id of element to focus on.
  * @param atribute -> boolean; true to visible - false to hide.
  */
-function setvisible(ident:Array<string>,atribute:boolean){
-
+function setvisible(ident:Array<string>,size:Array<string>,atribute:boolean){
     for (let i=0;i<ident.length;i++){
         var input:any=document.getElementById(ident[i]);
         if (atribute==true){
             input.style.visibility= "visible";
+            input.style.height=size[i];
         }else{
             input.style.visibility= "hidden";
+            input.style.height="0px"
         }
         console.log(ident[i] + " visibility: " + atribute);
     }
 }
 
-function setvisibleCl(classLmnt:string,atribute:boolean)
+function setvisibleCl(classLmnt:string,size:string,atribute:boolean)
 {
     let inputCollection=document.getElementsByClassName(classLmnt);
     for (let i=0;i<inputCollection.length;i++)
@@ -37,8 +42,10 @@ function setvisibleCl(classLmnt:string,atribute:boolean)
         var input:any=document.getElementById(inputCollection[i].id);
         if (atribute==true){
             input.style.visibility= "visible";
+            input.style.height=size;
         }else{
             input.style.visibility= "hidden";
+            input.style.height="0px"
         }
     }
     console.log(classLmnt + ' visibility change');
@@ -92,20 +99,20 @@ function verifyInput(lookIdent:string,verValue:Array<String>,blcklmnt:string,equ
  * @param show  -> element to focus
  * @param block -> True: Show | False: Hide
  */
-function onblockshow(show:Array<string>,block:boolean,requiredId:string){
+function onblockshow(show:Array<string>,size:Array<string>,block:boolean,requiredId:string){
     let rq=true;
     if (typeof requiredId == 'undefined') {
         rq=false;
     }
     for (let i=0;i<show.lastIndexOf.length;i++){
         if (block==true){
-            setvisible([show[i]],true);
+            setvisible([show[i]],[size[i]],true);
             if (rq==true)
             {
                 setRequired(requiredId);
             }
         }else{
-            setvisible([show[i]],false);
+            setvisible([show[i]],[size[i]],false);
             if (rq==true)
             {
                 rmRequired(requiredId);
@@ -114,20 +121,20 @@ function onblockshow(show:Array<string>,block:boolean,requiredId:string){
     }
 }
 
-function onblockshowByCl(show:Array<string>,block:boolean,requiredId?:string){
+function onblockshowByCl(show:Array<string>,size:Array<string>,block:boolean,requiredId?:string){
     let rq=true;
     if (typeof requiredId == 'undefined') {
         rq=false;
     }
     for (let i=0;i<=show.lastIndexOf.length;i++){
         if (block==true){
-            setvisibleCl(show[i],true);
+            setvisibleCl(show[i],size[i],true);
             if (rq==true)
             {
                 setRequired(requiredId);
             }
         }else{
-            setvisibleCl(show[i],false);
+            setvisibleCl(show[i],size[i],false);
             if (rq==true)
             {
                 rmRequired(requiredId);
@@ -156,7 +163,7 @@ function resetValues(idents:Array<string>){
     }
 }
 
-//POST REQUESTS
+//POST REQUESTS - NUEVA CUENTA
 function postReqCC(cc:string,kind:string,adj:string){
     var inputCC:any=document.getElementById(cc);
     var inputKind:any=document.getElementById(kind);
@@ -182,6 +189,7 @@ function postReqCC(cc:string,kind:string,adj:string){
     req.send(null);
 }
 
+//OBTENER EL RESUMEN DE CUENTAS
 function setCCSummary(){
     let totalCC=0;
     var req = new XMLHttpRequest();
@@ -189,7 +197,6 @@ function setCCSummary(){
     req.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             const data=JSON.parse(this.response);
-            console.log(data);
             
             for (let i=0;i<Object.keys(data["ccounts"]).length;i++){
                 totalCC=totalCC+data["ccounts"][i][2];
@@ -205,6 +212,7 @@ function setCCSummary(){
     req.send(null);
 }
 
+//TABLA DE RESUMEN DE CUENTAS
 function getCCTable(data:any){
     var input:any=document.getElementById("ccTable");
     let tbl = document.createElement('table');
@@ -231,3 +239,76 @@ function getCCTable(data:any){
     var thCC:any=document.getElementById("ccTH");
     thCC.colSpan="2";
 }
+
+//OBTENER INFO DE MOVIMIENTOS
+function setCCMoves(ccNameInput:String){
+    var req = new XMLHttpRequest();
+
+    req.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            const data=JSON.parse(this.response);
+            getMoveTable(data,ccNameInput);
+        }
+    };
+
+    req.open("GET","/userinfo",true);
+    req.setRequestHeader("token", tkn);
+    req.setRequestHeader("order","ccounts");
+    req.send(null);
+}
+
+//CREAR TABLA DE MOVIMIENTOS
+function getMoveTable(data:any,ccName:String){
+    var ccTotal=0;
+    var input:any=document.getElementById("ccMoves");
+    let tbl = document.createElement('table');
+    let th= tbl.createTHead();
+    th.appendChild(document.createTextNode("Cuentas"));
+    th.id="ccTH";
+    for (let i=0;i<Object.keys(data["moves"]).length;i++){
+        if(data["moves"][i][0]==ccName)
+        {
+            let moveName=data["moves"][i][1];
+            let ccCant=data["moves"][i][2];
+            const tr=tbl.insertRow();
+            const tdName=tr.insertCell();
+            tdName.appendChild(document.createTextNode(moveName));
+            const tdCant=tr.insertCell();
+            tdCant.appendChild(document.createTextNode("$"+ccCant.toString(10)));
+
+            ccTotal=ccTotal+ccCant;
+        }
+    }
+    const trFoot=tbl.insertRow();
+    const tdTotal=trFoot.insertCell();
+    tdTotal.appendChild(document.createTextNode("TOTAL"));
+    const tdTotalCant=trFoot.insertCell();
+    tdTotalCant.appendChild(document.createTextNode("$"+ccTotal));
+
+
+    input.appendChild(tbl);
+    var thCC:any=document.getElementById("ccTH");
+    thCC.colSpan="2";
+}
+
+//POST - REQUEST 
+function postReqNewMove(ccName:string,mvName:string,howMuch:string){
+    var mvInput:any=document.getElementById(mvName);
+    var hmInput:any=document.getElementById(howMuch);
+    var req = new XMLHttpRequest();
+
+    req.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            location.reload();
+        }
+    };
+
+    req.open("POST","/newmove",true);
+    req.setRequestHeader("token", tkn);
+    req.setRequestHeader('cc',ccName);
+    req.setRequestHeader("move",hmInput.value);
+    req.setRequestHeader("mn",mvInput.value);
+    req.send(null);
+}
+
+

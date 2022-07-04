@@ -143,7 +143,7 @@ app.get('/userinfo', requireOUT(), requireInfo(), (req, res, next) => {
     let user = data.allUsers.logs[ln];
     res.status(200).send(db.db[user]);
 });
-//LOAD USER NICK
+//LOAD USER NICK~~ UNUSED ()
 app.get("/usernick", requireOUT(), (req, res, next) => {
     console.log("matched token");
     let token = req.headers["token"].split("_");
@@ -249,6 +249,7 @@ const requireCC = () => {
         }
     };
 };
+//"moves":[["cc-name","name of move",how-much,"date"],~]
 app.post("/newcc", requireOUT(), requireCC(), (req, res) => {
     let ln = (req.headers["token"]).split("_");
     let user = data.allUsers.logs[ln[1]];
@@ -259,8 +260,43 @@ app.post("/newcc", requireOUT(), requireCC(), (req, res) => {
     console.log(arr);
     let lenght = Object.entries(db.db[user]["ccounts"]).length;
     db.db[user]["ccounts"][lenght] = arr;
+    let mvLenght = Object.entries(db.db[user]["moves"]).length;
+    let firstMove = [ccName, "creation", 0, Date(), mvLenght];
+    db.db[user]["moves"][mvLenght] = firstMove;
     updateDB();
     res.status(200).send("New cc added");
+});
+const requireMove = () => {
+    return (req, res, next) => {
+        let ccName = req.headers["cc"];
+        let howMuch = parseInt(req.headers["move"]);
+        let moveName = req.headers["mn"];
+        if (ccName == undefined || howMuch == undefined || moveName == undefined) {
+            res.status(400).send("Incomplete data");
+        }
+        else {
+            next();
+        }
+    };
+};
+//"moves":[["cc-name","name of move",how-much,"date"],~]
+app.post("/newmove", requireOUT(), requireMove(), (req, res) => {
+    let ln = (req.headers["token"]).split("_");
+    let user = data.allUsers.logs[ln[1]];
+    let ccName = req.headers["cc"];
+    let howMuch = parseInt(req.headers["move"]);
+    let moveName = req.headers["mn"];
+    let mvLenght = Object.entries(db.db[user]["moves"]).length;
+    let firstMove = [ccName, moveName, howMuch, Date(), mvLenght];
+    db.db[user]["moves"][mvLenght] = firstMove;
+    let ccLenght = Object.entries(db.db[user]["ccounts"]).length;
+    for (let i = 0; i < ccLenght; i++) {
+        if (db.db[user]["ccounts"][i][0] == ccName) {
+            db.db[user]["ccounts"][i][2] = db.db[user]["ccounts"][i][2] + howMuch;
+        }
+    }
+    updateDB();
+    res.status(200).send("New move added");
 });
 //UPDATES
 function updateData() {

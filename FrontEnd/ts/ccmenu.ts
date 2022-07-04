@@ -1,6 +1,10 @@
 function readButton(nm:string){
     const newLi = document.createElement("li");
     const newA = document.createElement("a");
+    newA.href="#";
+    newA.onclick=function(){
+        window.location.replace("/user/subpages/count-wr.html?lang="+shortln+"&out="+tkn+"&cc="+nm);
+    };
     const currentLi = document.getElementById("mini");
     const aText = document.createTextNode(nm);
     newA.appendChild(aText);

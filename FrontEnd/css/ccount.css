@@ -26,7 +26,7 @@ select{
     width: 40%;
 }
 
-#save{
+#save,#cancel{
     width: auto;
 }
 
@@ -35,8 +35,9 @@ body{
     background-color: rgb(168, 156, 214);
 }
 
-#accounttype{
+#accounttype,#addMove{
     visibility: hidden;
+    height: 0px;
 }
 
 #upForm{
@@ -45,6 +46,7 @@ body{
 
 #interestForm{
     visibility: hidden;
+    height: 0px;
 }
 
 #submitForm{

@@ -16,11 +16,15 @@
             },
             "ccounts":
             [["Cuenta prueba","Vista",500000,""],
-            ["Cuenta prueba 2","corriente",0,""],
-            ["Cuenta ahorro 1","Ahorro",10000,0.8]],
+            ["Cuenta prueba 2","corriente",0,""]],
             "invests":
             [["Fondo A","FFMM",1000,5],
-            ["Fondo B","FFMM",20000,5]]
+            ["Fondo B","FFMM",20000,5]],
+            "moves":[
+            ["Cuenta prueba","creation",500000,null,0],
+            ["Cuenta prueba 2","creation",0,null,1],
+            ["Fondo A","creation",1000,null,2],
+            ["Fondo B","creation",20000,null,3]]
         },
         "leo":{
             "info":{
@@ -29,7 +33,8 @@
                 "mail":"mailprueba@mail.com"
             },
             "ccounts":[],
-            "invests":[]
+            "invests":[],
+            "moves":[]
         }
     }
 }

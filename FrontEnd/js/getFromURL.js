@@ -45,6 +45,7 @@ var tkn = getParameterByName("out");
 ;
 var lang = getLangPath(getParameterByName("lang"));
 var tempdb = "/tempbackend/tempdb.json";
+var cc = getParameterByName("cc");
 var shortln = getParameterByName("lang");
 if (shortln == "") {
     shortln = "es";

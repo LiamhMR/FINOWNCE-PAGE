@@ -39,7 +39,7 @@
     },
 
     "user":{
-        "menu":["Resumen","Cuentas","Inversiones","Contactar soprote","Cerrar sesión","Añadir cuenta","Añadir activo","Perfil"],
+        "menu":["Resumen","Cuentas","Inversiones","Contactar soprote","Cerrar sesión","Añadir cuenta","Añadir activo","Perfil","Añadir movimiento"],
         "summary":{},
         "ccount":{
             "greet":"Hola ",

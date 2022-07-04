@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="/css/reset.css" type="text/css">
         <link rel="stylesheet" href="/css/summary.css" type="text/css">
         <link rel="stylesheet" href="/css/ccount.css" type="text/css">
+        <script src="/js/getLang.js"></script>
         <script src="/js/cccreate.js"></script>
         <script src="/js/getFromURL.js"></script>
     </head>
@@ -37,23 +38,40 @@
                 </div>
 
                 <input type="submit" id="save" value="GUARDAR" onclick="postReqCC('ccName','kindcc','reajuste')">
-                <input type="submit" id="cancel" value="CANCELAR" onclick="setvisible(['accounttype','interestForm'],[],false)">
+                <input type="button" id="cancel" value="CANCELAR" onclick="setvisible(['accounttype','interestForm'],[],false)">
             </form>
         </div>
 
         <!--RESUMEN DE CUENTAS-->
-        <div class="summ" id="countSummary">
-            <div class="table" id="ccTable">
-            </div>
-            <div>
-                <img id="graph" src="https://imgs.search.brave.com/Ks2RyDXFnPuhoxHSz6SG8l3aeTmoYyjfQonrihtRYs0/rs:fit:512:512:1/g:ce/aHR0cHM6Ly9pbWFn/ZXMudmV4ZWxzLmNv/bS9tZWRpYS91c2Vy/cy8zLzEzOTk3NC9p/c29sYXRlZC9wcmV2/aWV3L2EyMmQ1NGZh/YzgyYTZhNDNkMWRl/OTgzMTdhZjEwYmE3/LWdyLS1maWNvLWRl/LWJhcnJhcy1kZS1j/b2xvcmVzLTYtYnkt/dmV4ZWxzLnBuZw" size="50px"></div>
+        <div class="summ" id="count-reader">
+            <div class="table" id="ccMoves">
             </div>
         </div>
 
+        <div id="menu">
+            <ul id="mini">
+                <li><a id="addmv" href="#" onclick="setvisible(['addMove'],['300px'],true)"></a></li>
+            </ul>   
+        </div>
+
+        <div id="addMove">
+            <form id="newMove" action="#" onsubmit="setvisible(['addMove',],[],false);return false">
+                <div class="minform" id="mvform">
+                    <label id="ccMoveLabel" for="ccMove">Nombre del movimiento</label>
+                    <input type="text" id="ccMove" required minlength="1">
+                    <label id="ccHowMuchLabel" for="ccHowMuch">Cantidad</label>
+                    <input type="number" id="ccHowMuch" required minlength="1">
+                </div>
+
+                <input type="submit" id="savemv" value="Agregar" onclick="postReqNewMove(cc,'ccMove','ccHowMuch')">
+                <input type="button" id="cancelmv" value="Cancelar" onclick="setvisible(['addMove'],[],false)">
+            </form>
+        </div>
+
         <script>
-            if (document.readyState){
-                setCCSummary();
-            }
+            getMenu(lang,"user",8,"addmv");
+            setCCMoves(cc);
+
         </script>
     </body>
 </html>

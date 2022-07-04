@@ -4,6 +4,10 @@ function addButton(ident) {
     var input = document.getElementById(ident);
     var newLi = document.createElement("li");
     var newA = document.createElement("a");
+    newA.href = "#";
+    newA.onclick = function () {
+        window.location.replace("/FrontEnd/user/subpages/count-wr.html?lang=" + shortln + "&out=" + tkn + "&cc=" + input.value);
+    };
     var currentLi = document.getElementById("mini");
     var aText = document.createTextNode(input.value);
     newA.appendChild(aText);
@@ -15,27 +19,31 @@ function addButton(ident) {
  * @param ident ->id of element to focus on.
  * @param atribute -> boolean; true to visible - false to hide.
  */
-function setvisible(ident, atribute) {
+function setvisible(ident, size, atribute) {
     for (var i = 0; i < ident.length; i++) {
         var input = document.getElementById(ident[i]);
         if (atribute == true) {
             input.style.visibility = "visible";
+            input.style.height = size[i];
         }
         else {
             input.style.visibility = "hidden";
+            input.style.height = "0px";
         }
         console.log(ident[i] + " visibility: " + atribute);
     }
 }
-function setvisibleCl(classLmnt, atribute) {
+function setvisibleCl(classLmnt, size, atribute) {
     var inputCollection = document.getElementsByClassName(classLmnt);
     for (var i = 0; i < inputCollection.length; i++) {
         var input = document.getElementById(inputCollection[i].id);
         if (atribute == true) {
             input.style.visibility = "visible";
+            input.style.height = size;
         }
         else {
             input.style.visibility = "hidden";
+            input.style.height = "0px";
         }
     }
     console.log(classLmnt + ' visibility change');
@@ -86,40 +94,40 @@ function verifyInput(lookIdent, verValue, blcklmnt, equalto) {
  * @param show  -> element to focus
  * @param block -> True: Show | False: Hide
  */
-function onblockshow(show, block, requiredId) {
+function onblockshow(show, size, block, requiredId) {
     var rq = true;
     if (typeof requiredId == 'undefined') {
         rq = false;
     }
     for (var i = 0; i < show.lastIndexOf.length; i++) {
         if (block == true) {
-            setvisible([show[i]], true);
+            setvisible([show[i]], [size[i]], true);
             if (rq == true) {
                 setRequired(requiredId);
             }
         }
         else {
-            setvisible([show[i]], false);
+            setvisible([show[i]], [size[i]], false);
             if (rq == true) {
                 rmRequired(requiredId);
             }
         }
     }
 }
-function onblockshowByCl(show, block, requiredId) {
+function onblockshowByCl(show, size, block, requiredId) {
     var rq = true;
     if (typeof requiredId == 'undefined') {
         rq = false;
     }
     for (var i = 0; i <= show.lastIndexOf.length; i++) {
         if (block == true) {
-            setvisibleCl(show[i], true);
+            setvisibleCl(show[i], size[i], true);
             if (rq == true) {
                 setRequired(requiredId);
             }
         }
         else {
-            setvisibleCl(show[i], false);
+            setvisibleCl(show[i], size[i], false);
             if (rq == true) {
                 rmRequired(requiredId);
             }
@@ -143,7 +151,7 @@ function resetValues(idents) {
         console.log("reset " + id);
     }
 }
-//POST REQUESTS
+//POST REQUESTS - NUEVA CUENTA
 function postReqCC(cc, kind, adj) {
     var inputCC = document.getElementById(cc);
     var inputKind = document.getElementById(kind);
@@ -164,13 +172,13 @@ function postReqCC(cc, kind, adj) {
     req.setRequestHeader("token", tkn);
     req.send(null);
 }
+//OBTENER EL RESUMEN DE CUENTAS
 function setCCSummary() {
     var totalCC = 0;
     var req = new XMLHttpRequest();
     req.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             var data = JSON.parse(this.response);
-            console.log(data);
             for (var i = 0; i < Object.keys(data["ccounts"]).length; i++) {
                 totalCC = totalCC + data["ccounts"][i][2];
             }
@@ -183,6 +191,7 @@ function setCCSummary() {
     req.setRequestHeader("order", "ccounts");
     req.send(null);
 }
+//TABLA DE RESUMEN DE CUENTAS
 function getCCTable(data) {
     var input = document.getElementById("ccTable");
     var tbl = document.createElement('table');
@@ -206,4 +215,64 @@ function getCCTable(data) {
     input.appendChild(tbl);
     var thCC = document.getElementById("ccTH");
     thCC.colSpan = "2";
+}
+//OBTENER INFO DE MOVIMIENTOS
+function setCCMoves(ccNameInput) {
+    var req = new XMLHttpRequest();
+    req.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var data = JSON.parse(this.response);
+            getMoveTable(data, ccNameInput);
+        }
+    };
+    req.open("GET", "/userinfo", true);
+    req.setRequestHeader("token", tkn);
+    req.setRequestHeader("order", "ccounts");
+    req.send(null);
+}
+//CREAR TABLA DE MOVIMIENTOS
+function getMoveTable(data, ccName) {
+    var ccTotal = 0;
+    var input = document.getElementById("ccMoves");
+    var tbl = document.createElement('table');
+    var th = tbl.createTHead();
+    th.appendChild(document.createTextNode("Cuentas"));
+    th.id = "ccTH";
+    for (var i = 0; i < Object.keys(data["moves"]).length; i++) {
+        if (data["moves"][i][0] == ccName) {
+            var moveName = data["moves"][i][1];
+            var ccCant = data["moves"][i][2];
+            var tr = tbl.insertRow();
+            var tdName = tr.insertCell();
+            tdName.appendChild(document.createTextNode(moveName));
+            var tdCant = tr.insertCell();
+            tdCant.appendChild(document.createTextNode("$" + ccCant.toString(10)));
+            ccTotal = ccTotal + ccCant;
+        }
+    }
+    var trFoot = tbl.insertRow();
+    var tdTotal = trFoot.insertCell();
+    tdTotal.appendChild(document.createTextNode("TOTAL"));
+    var tdTotalCant = trFoot.insertCell();
+    tdTotalCant.appendChild(document.createTextNode("$" + ccTotal));
+    input.appendChild(tbl);
+    var thCC = document.getElementById("ccTH");
+    thCC.colSpan = "2";
+}
+//POST - REQUEST 
+function postReqNewMove(ccName, mvName, howMuch) {
+    var mvInput = document.getElementById(mvName);
+    var hmInput = document.getElementById(howMuch);
+    var req = new XMLHttpRequest();
+    req.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            location.reload();
+        }
+    };
+    req.open("POST", "/newmove", true);
+    req.setRequestHeader("token", tkn);
+    req.setRequestHeader('cc', ccName);
+    req.setRequestHeader("move", hmInput.value);
+    req.setRequestHeader("mn", mvInput.value);
+    req.send(null);
 }
