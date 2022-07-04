@@ -4,6 +4,7 @@
         <link rel="stylesheet" href="/css/stylesLii.css" type="text/css">
         <script src="/js/getLang.js"></script>
         <script src="/js/getFromURL.js"></script>
+        <script src="/js/ccmenu.js"></script>
     </head>
 
     <body>
@@ -16,6 +17,9 @@
         <script src="/js/cccreate.js" async></script>
         <script>
             getMenu(lang,"user",5,"addcc");
+            if(document.readyState){
+                setCC();
+            }
         </script>
     </body>
 </html>

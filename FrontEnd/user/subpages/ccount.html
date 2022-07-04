@@ -6,7 +6,7 @@
         <script src="../../js/jquery.js"></script> 
         <script src="../../js/loadhtml.js"></script>
         <div data-include="../../user/user-menu.html"></div>
-        <br><br>
+        <br>
         <div data-include="../../user/cc-menu.html"></div>
         <!-- FIN MENÚ -->
         <link rel="stylesheet" href="/css/reset.css" type="text/css">
@@ -37,10 +37,22 @@
                 </div>
 
                 <input type="submit" id="save" value="GUARDAR" onclick="postReqCC('ccName','kindcc','reajuste')">
-
             </form>
-        </div>
 
-        <script src="" async defer></script>
+            <!--RESUMEN DE CUENTAS-->
+            <div class="summ" id="countSummary">
+                <div class="table" id="ccTable">
+                </div>
+                <div>
+                    <img id="graph" src="https://imgs.search.brave.com/Ks2RyDXFnPuhoxHSz6SG8l3aeTmoYyjfQonrihtRYs0/rs:fit:512:512:1/g:ce/aHR0cHM6Ly9pbWFn/ZXMudmV4ZWxzLmNv/bS9tZWRpYS91c2Vy/cy8zLzEzOTk3NC9p/c29sYXRlZC9wcmV2/aWV3L2EyMmQ1NGZh/YzgyYTZhNDNkMWRl/OTgzMTdhZjEwYmE3/LWdyLS1maWNvLWRl/LWJhcnJhcy1kZS1j/b2xvcmVzLTYtYnkt/dmV4ZWxzLnBuZw" size="50px"></div>
+                </div>
+            </div>
+
+            <script>
+                if (document.readyState){
+                    setCCSummary();
+                }
+            </script>
+        </div>
     </body>
 </html>

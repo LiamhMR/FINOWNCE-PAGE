@@ -1,4 +1,5 @@
 "use strict";
+var CC = 0;
 function addButton(ident) {
     var input = document.getElementById(ident);
     var newLi = document.createElement("li");
@@ -162,4 +163,47 @@ function postReqCC(cc, kind, adj) {
     req.setRequestHeader("rent", inputAdj.value);
     req.setRequestHeader("token", tkn);
     req.send(null);
+}
+function setCCSummary() {
+    var totalCC = 0;
+    var req = new XMLHttpRequest();
+    req.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var data = JSON.parse(this.response);
+            console.log(data);
+            for (var i = 0; i < Object.keys(data["ccounts"]).length; i++) {
+                totalCC = totalCC + data["ccounts"][i][2];
+            }
+            CC = totalCC;
+            getCCTable(data);
+        }
+    };
+    req.open("GET", "/userinfo", true);
+    req.setRequestHeader("token", tkn);
+    req.setRequestHeader("order", "ccounts");
+    req.send(null);
+}
+function getCCTable(data) {
+    var input = document.getElementById("ccTable");
+    var tbl = document.createElement('table');
+    var th = tbl.createTHead();
+    th.appendChild(document.createTextNode("Cuentas"));
+    th.id = "ccTH";
+    for (var i = 0; i < Object.keys(data["ccounts"]).length; i++) {
+        var ccName = data["ccounts"][i][0];
+        var ccCant = data["ccounts"][i][2];
+        var tr = tbl.insertRow();
+        var tdName = tr.insertCell();
+        tdName.appendChild(document.createTextNode(ccName));
+        var tdCant = tr.insertCell();
+        tdCant.appendChild(document.createTextNode("$" + ccCant.toString(10)));
+    }
+    var trFoot = tbl.insertRow();
+    var tdTotal = trFoot.insertCell();
+    tdTotal.appendChild(document.createTextNode("TOTAL"));
+    var tdTotalCant = trFoot.insertCell();
+    tdTotalCant.appendChild(document.createTextNode("$" + CC));
+    input.appendChild(tbl);
+    var thCC = document.getElementById("ccTH");
+    thCC.colSpan = "2";
 }
