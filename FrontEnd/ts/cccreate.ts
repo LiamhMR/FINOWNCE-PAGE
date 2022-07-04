@@ -153,3 +153,29 @@ function resetValues(idents:Array<string>){
         console.log("reset " + id);
     }
 }
+
+//POST REQUESTS
+function postReqCC(cc:string,kind:string,adj:string){
+    var inputCC:any=document.getElementById(cc);
+    var inputKind:any=document.getElementById(kind);
+    var inputAdj:any=document.getElementById(adj);
+    
+    var req=new XMLHttpRequest();
+
+    req.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            resetValues([cc,kind,adj]);
+
+       }
+    };
+
+    req.open("POST","/newcc",true);
+    req.setRequestHeader("cc", inputCC.value);
+    req.setRequestHeader("kind", inputKind.value);
+    if(inputAdj.value=="" || inputAdj==undefined){
+        inputAdj.value=0;
+    }
+    req.setRequestHeader("rent",inputAdj.value);
+    req.setRequestHeader("token",tkn);
+    req.send(null);
+}

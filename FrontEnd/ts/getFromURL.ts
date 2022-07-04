@@ -40,7 +40,7 @@ function fillVars(){
 }
 
 /**EJECUCIONES INMEDIATAS */
-var tkn=getParameterByName("OUT");;
+var tkn=getParameterByName("out");;
 var lang=getLangPath(getParameterByName("lang"));
 var tempdb="/tempbackend/tempdb.json";
 var shortln=getParameterByName("lang")

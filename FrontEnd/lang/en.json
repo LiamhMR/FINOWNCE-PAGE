@@ -39,7 +39,7 @@
     },
 
     "user":{
-        "menu":["Summary","Counts","Investment","Support","Log out","Add count","Add invest"],
+        "menu":["Summary","Counts","Investment","Support","Log out","Add count","Add invest","Settings"],
         "summary":{},
         "ccount":{
             "greet":"Hello ",

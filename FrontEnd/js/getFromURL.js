@@ -41,7 +41,7 @@ function fillVars() {
     console.log("Taken variables from URL");
 }
 /**EJECUCIONES INMEDIATAS */
-var tkn = getParameterByName("OUT");
+var tkn = getParameterByName("out");
 ;
 var lang = getLangPath(getParameterByName("lang"));
 var tempdb = "/tempbackend/tempdb.json";

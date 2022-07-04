@@ -18,7 +18,7 @@
     <body onload="verifyInput('kindcc',['Vista','Corriente'],'save')">
         
         <div id="accounttype">
-            <form id="newCc" action="#" onsubmit="addButton('ccName');setvisible(['accounttype','interestForm'],false);resetValues(['ccName','kindcc','reajuste'])">
+            <form id="newCc" action="#" onsubmit="addButton('ccName');setvisible(['accounttype','interestForm'],false);return false">
                 <div class="minform" id="upform">
                     <label id="ccNameLabel" for="ccName">Nombre de la cuenta</label>
                     <input type="text" id="ccName" required minlength="2">
@@ -36,7 +36,7 @@
                     <input class="interest" type="number" onchange="verifyInput('reajuste',[''],'save',false)" id="reajuste" min="0" max="100" minlength="0">
                 </div>
 
-                <input type="submit" id="save" value="GUARDAR">
+                <input type="submit" id="save" value="GUARDAR" onclick="postReqCC('ccName','kindcc','reajuste')">
 
             </form>
         </div>

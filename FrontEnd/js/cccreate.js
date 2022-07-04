@@ -142,3 +142,24 @@ function resetValues(idents) {
         console.log("reset " + id);
     }
 }
+//POST REQUESTS
+function postReqCC(cc, kind, adj) {
+    var inputCC = document.getElementById(cc);
+    var inputKind = document.getElementById(kind);
+    var inputAdj = document.getElementById(adj);
+    var req = new XMLHttpRequest();
+    req.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            resetValues([cc, kind, adj]);
+        }
+    };
+    req.open("POST", "/newcc", true);
+    req.setRequestHeader("cc", inputCC.value);
+    req.setRequestHeader("kind", inputKind.value);
+    if (inputAdj.value == "" || inputAdj == undefined) {
+        inputAdj.value = 0;
+    }
+    req.setRequestHeader("rent", inputAdj.value);
+    req.setRequestHeader("token", tkn);
+    req.send(null);
+}

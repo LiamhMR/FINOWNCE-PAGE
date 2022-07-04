@@ -210,7 +210,6 @@ function addUser(req:any){
     }`;
   //let objuser=`["${createOUT()}","${password}",true,0]`;
   let objuser=[createOUT(),password,true,0];
-  console.log(objuser);
   db.db[usernick]=JSON.parse(objinfo);
   db.db["mails"][mail]=true;
   data.allUsers["users"][usernick]=objuser;
@@ -223,6 +222,36 @@ app.post("/newuser",requirelmnts(),(req:any,res:any)=>{
   res.send("User added");
 })
 
+const requireCC=()=>{
+  return (req:any,res:any,next:any)=>{
+    
+    let ccName=req.headers["cc"];
+    let ccKind=req.headers["kind"];
+    let ccRent=req.headers["rent"];
+    if(ccName==undefined || ccKind==undefined || ccRent==undefined){
+      res.status(400).send("Incomplete");
+    }else{
+      console.log("Captured cc");
+      next();
+    }
+  }
+}
+app.post("/newcc",requireOUT(),requireCC(),(req:any,res:any)=>{
+  let ln=(req.headers["token"]).split("_");
+  let user=data.allUsers.logs[ln[1]];
+  let ccName=req.headers["cc"];
+  let ccKind=req.headers["kind"];
+  let ccRent=parseInt(req.headers["rent"]);
+  let arr:any=[ccName,ccKind,0,ccRent];
+  console.log(arr);
+  let lenght=Object.entries(db.db[user]["ccounts"]).length;
+  db.db[user]["ccounts"][lenght]=arr;
+
+  updateDB();
+  res.status(200).send("New cc added");
+});
+
+//UPDATES
 function updateData(){
   const upd=JSON.stringify(data);
   fs.writeFile("./json/tusers.json",upd,(err)=>{
@@ -239,7 +268,7 @@ function updateData(){
   console.log("update test entrie");
 }
 
-function updateDB(){
+function updateDB(mix?:boolean){
   const upd=JSON.stringify(db);
   fs.writeFile("./json/tdb.json",upd,(err)=>{
     if(err){
