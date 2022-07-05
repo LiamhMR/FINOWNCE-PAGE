@@ -270,11 +270,20 @@ function getMoveTable(data:any,ccName:String){
         {
             let moveName=data["moves"][i][1];
             let ccCant=data["moves"][i][2];
+            let dateText=data["moves"][i][3];
+            let date="Unkowing";
             const tr=tbl.insertRow();
             const tdName=tr.insertCell();
             tdName.appendChild(document.createTextNode(moveName));
             const tdCant=tr.insertCell();
             tdCant.appendChild(document.createTextNode("$"+ccCant.toString(10)));
+            const tdDate=tr.insertCell();
+            if (dateText!=null){
+                date=dateText.split(" ");
+                tdDate.appendChild(document.createTextNode(date[2]+" "+date[1]+" "+date[3]+" "+date[4]));
+            }else{
+                tdDate.appendChild(document.createTextNode(dateText));
+            }
 
             ccTotal=ccTotal+ccCant;
         }

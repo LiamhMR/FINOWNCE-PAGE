@@ -242,11 +242,21 @@ function getMoveTable(data, ccName) {
         if (data["moves"][i][0] == ccName) {
             var moveName = data["moves"][i][1];
             var ccCant = data["moves"][i][2];
+            var dateText = data["moves"][i][3];
+            var date = "Unkowing";
             var tr = tbl.insertRow();
             var tdName = tr.insertCell();
             tdName.appendChild(document.createTextNode(moveName));
             var tdCant = tr.insertCell();
             tdCant.appendChild(document.createTextNode("$" + ccCant.toString(10)));
+            var tdDate = tr.insertCell();
+            if (dateText != null) {
+                date = dateText.split(" ");
+                tdDate.appendChild(document.createTextNode(date[2] + " " + date[1] + " " + date[3] + " " + date[4]));
+            }
+            else {
+                tdDate.appendChild(document.createTextNode(dateText));
+            }
             ccTotal = ccTotal + ccCant;
         }
     }
