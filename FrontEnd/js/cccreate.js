@@ -251,8 +251,9 @@ function getMoveTable(data, ccName) {
             tdCant.appendChild(document.createTextNode("$" + ccCant.toString(10)));
             var tdDate = tr.insertCell();
             if (dateText != null) {
-                date = dateText.split(" ");
-                tdDate.appendChild(document.createTextNode(date[2] + " " + date[1] + " " + date[3] + " " + date[4]));
+                //date=dateText.split(" ");
+                //tdDate.appendChild(document.createTextNode(date[2]+" "+date[1]+" "+date[3]+" "+date[4]));
+                tdDate.appendChild(document.createTextNode(dateText));
             }
             else {
                 tdDate.appendChild(document.createTextNode(dateText));
