@@ -35,6 +35,20 @@ table, th, td {
     border-radius: 15px;
 
 }
+
+#mvtable{
+    float: none;
+    text-align: center;
+    display: flex;
+    padding-left: 15%;
+    width: 70%;
+}
+
+#ccMoves{
+    padding-left: 30%;
+    padding-right: 30;
+    text-align: center;
+}
 th, td {
     padding: 10px;
 }

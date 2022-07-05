@@ -40,6 +40,8 @@ body{
     height: 0px;
 }
 
+
+
 #upForm{
     visibility: hidden;
 }
@@ -51,4 +53,34 @@ body{
 
 #submitForm{
     visibility: hidden;
+}
+
+table{
+    width: 80%;
+    float:none;
+
+
+    text-align: center;
+    color: aliceblue;
+    background-color: rgb(75, 52, 71);
+    border-radius: 15px;
+}
+
+th, td {
+    padding: 10px;
+    border-top: 1px solid aliceblue;
+}
+th{
+    font-size: 20px;
+}
+
+td{
+    font-size: 15px;
+}
+
+.btn-info {
+    background-color: #72656c;
+    border-color: #441d47;
+    border: 1px solid;
+    display: contents;
 }

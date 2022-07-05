@@ -231,18 +231,21 @@ function setCCMoves(ccNameInput) {
     req.send(null);
 }
 //CREAR TABLA DE MOVIMIENTOS
+var MoveId = [];
 function getMoveTable(data, ccName) {
     var ccTotal = 0;
     var input = document.getElementById("ccMoves");
     var tbl = document.createElement('table');
+    //tbl.className="mvtable";
     var th = tbl.createTHead();
-    th.appendChild(document.createTextNode("Cuentas"));
+    th.appendChild(document.createTextNode("Movimientos"));
     th.id = "ccTH";
     for (var i = 0; i < Object.keys(data["moves"]).length; i++) {
         if (data["moves"][i][0] == ccName) {
             var moveName = data["moves"][i][1];
             var ccCant = data["moves"][i][2];
             var dateText = data["moves"][i][3];
+            MoveId[i] = data["moves"][i][4];
             var date = "Unkowing";
             var tr = tbl.insertRow();
             var tdName = tr.insertCell();
@@ -258,6 +261,17 @@ function getMoveTable(data, ccName) {
             else {
                 tdDate.appendChild(document.createTextNode(dateText));
             }
+            var tdEdit = tr.insertCell();
+            var editGraph = document.createElement('span');
+            editGraph.className = "fa fa-edit";
+            var editButton = document.createElement('a');
+            editButton.className = "btn btn-info btn-lg";
+            editButton.onclick = function () {
+                setvisible(['addMove'], ['300px'], true);
+                setvisible(['savemv'], [], false);
+            };
+            editButton.appendChild(editGraph);
+            tdEdit.appendChild(editButton);
             ccTotal = ccTotal + ccCant;
         }
     }

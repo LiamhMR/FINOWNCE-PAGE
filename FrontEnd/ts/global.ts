@@ -33,12 +33,17 @@ function globalcall(ident:string){
     scriptReactDOM.src="https://unpkg.com/react-dom@18/umd/react-dom.development.js";
     scriptReactDOM.crossOrigin="";
 
+    const scriptGly=document.createElement("link");
+    scriptGly.href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
+    scriptGly.rel="stylesheet";
+
     currentLmnt?.appendChild(link);
     currentLmnt?.appendChild(scriptJq);
     currentLmnt?.appendChild(scriptPo);
     currentLmnt?.appendChild(scriptBs);
     currentLmnt?.appendChild(scriptReact);
     currentLmnt?.appendChild(scriptReactDOM);
+    currentLmnt?.appendChild(scriptGly);
     console.log("load bootstrap");
 }
 globalcall("gc");

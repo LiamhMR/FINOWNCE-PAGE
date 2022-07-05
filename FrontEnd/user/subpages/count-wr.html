@@ -42,15 +42,15 @@
             </form>
         </div>
 
-        <!--RESUMEN DE CUENTAS-->
-        <div class="summ" id="count-reader">
-            <div class="table" id="ccMoves">
+        <!--RESUMEN DE movimientos-->
+        <div class="reader" id="count-reader">
+            <div class="mvtableclass" id="ccMoves">
             </div>
         </div>
 
         <div id="menu">
             <ul id="mini">
-                <li><a id="addmv" href="#" onclick="setvisible(['addMove'],['300px'],true)"></a></li>
+                <li><a id="addmv" href="#" onclick="setvisible(['addMove'],['300px'],true);setvisible(['editmv'],[],false)"></a></li>
             </ul>   
         </div>
 
@@ -64,6 +64,7 @@
                 </div>
 
                 <input type="submit" id="savemv" value="Agregar" onclick="postReqNewMove(cc,'ccMove','ccHowMuch')">
+                <input type="submit" id="editmv" value="Guardar" onclick="">
                 <input type="button" id="cancelmv" value="Cancelar" onclick="setvisible(['addMove'],[],false)">
             </form>
         </div>

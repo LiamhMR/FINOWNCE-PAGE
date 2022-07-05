@@ -27,12 +27,16 @@ function globalcall(ident) {
     var scriptReactDOM = document.createElement("script");
     scriptReactDOM.src = "https://unpkg.com/react-dom@18/umd/react-dom.development.js";
     scriptReactDOM.crossOrigin = "";
+    var scriptGly = document.createElement("link");
+    scriptGly.href = "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
+    scriptGly.rel = "stylesheet";
     currentLmnt === null || currentLmnt === void 0 ? void 0 : currentLmnt.appendChild(link);
     currentLmnt === null || currentLmnt === void 0 ? void 0 : currentLmnt.appendChild(scriptJq);
     currentLmnt === null || currentLmnt === void 0 ? void 0 : currentLmnt.appendChild(scriptPo);
     currentLmnt === null || currentLmnt === void 0 ? void 0 : currentLmnt.appendChild(scriptBs);
     currentLmnt === null || currentLmnt === void 0 ? void 0 : currentLmnt.appendChild(scriptReact);
     currentLmnt === null || currentLmnt === void 0 ? void 0 : currentLmnt.appendChild(scriptReactDOM);
+    currentLmnt === null || currentLmnt === void 0 ? void 0 : currentLmnt.appendChild(scriptGly);
     console.log("load bootstrap");
 }
 globalcall("gc");

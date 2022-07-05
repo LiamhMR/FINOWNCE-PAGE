@@ -328,4 +328,4 @@ function getNick(out:string,lognum:any){
   const obj=data.allUsers;
 }
 
-app.listen(5000,()=>console.log('Server started on 5000'));
+app.listen(6000,()=>console.log('Server started on 6000'));
