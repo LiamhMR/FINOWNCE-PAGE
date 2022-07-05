@@ -6,7 +6,7 @@ function addButton(ident) {
     var newA = document.createElement("a");
     newA.href = "#";
     newA.onclick = function () {
-        window.location.replace("/FrontEnd/user/subpages/count-wr.html?lang=" + shortln + "&out=" + tkn + "&cc=" + input.value);
+        location.reload;
     };
     var currentLi = document.getElementById("mini");
     var aText = document.createTextNode(input.value);
@@ -251,9 +251,9 @@ function getMoveTable(data, ccName) {
             tdCant.appendChild(document.createTextNode("$" + ccCant.toString(10)));
             var tdDate = tr.insertCell();
             if (dateText != null) {
-                //date=dateText.split(" ");
-                //tdDate.appendChild(document.createTextNode(date[2]+" "+date[1]+" "+date[3]+" "+date[4]));
-                tdDate.appendChild(document.createTextNode(dateText));
+                date = dateText.split(" ");
+                tdDate.appendChild(document.createTextNode(date[2] + " " + date[1] + " " + date[3] + " " + date[4]));
+                //tdDate.appendChild(document.createTextNode(dateText));
             }
             else {
                 tdDate.appendChild(document.createTextNode(dateText));
