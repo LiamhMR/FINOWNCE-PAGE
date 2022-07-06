@@ -37,18 +37,17 @@
                     <input class="interest" type="number" onchange="verifyInput('reajuste',[''],'save',false)" id="reajuste" min="0" max="100" minlength="0">
                 </div>
 
-                <input type="submit" id="save" value="GUARDAR" onclick="postReqCC('ccName','kindcc','reajuste')">
+                <input type="submit" id="save" value="GUARDAR" onclick="postReqCC('ccName','kindcc','reajuste');location.reload">
                 <input type="submit" id="cancel" value="CANCELAR" onclick="setvisible(['accounttype','interestForm'],[],false)">
             </form>
         </div>
 
         <!--RESUMEN DE CUENTAS-->
-        
-        <div class="table" id="ccTable">
-        </div>
-
-        <div id="graphCC">
-                
+        <div id="containercc">
+            <div id="containertb">
+                <div class="table" id="ccTable"></div>
+            </div>
+            <div id="graphCC"></div>
         </div>
 
         <script>

@@ -19,17 +19,20 @@
         <h1 id="usernick"></h1>
         <h1 id="total">TOTAL:$</h1>
         <div class="summ" id="countSummary">
-            <div class="table" id="ccTable">
+            <div id="container">
+                <div class="table" id="ccTable">
+                </div>
             </div>
             <div id="graphCC">
             </div>
         </div>
 
         <div class="summ" id="investSummary">
-            <div class="table" id="invTable">
+            <div id="container">
+                <div class="table" id="invTable">
+                </div>
             </div>
-            <div>
-                <img id="graph" src="https://imgs.search.brave.com/Ks2RyDXFnPuhoxHSz6SG8l3aeTmoYyjfQonrihtRYs0/rs:fit:512:512:1/g:ce/aHR0cHM6Ly9pbWFn/ZXMudmV4ZWxzLmNv/bS9tZWRpYS91c2Vy/cy8zLzEzOTk3NC9p/c29sYXRlZC9wcmV2/aWV3L2EyMmQ1NGZh/YzgyYTZhNDNkMWRl/OTgzMTdhZjEwYmE3/LWdyLS1maWNvLWRl/LWJhcnJhcy1kZS1j/b2xvcmVzLTYtYnkt/dmV4ZWxzLnBuZw"></div>
+            <div id="graphInv">
             </div>
         </div>
 
@@ -43,6 +46,7 @@
                 requestNick();
                 setState("total");
                 reqChartData(Highcharts);
+                reqChartDataInv(Highcharts);
                 //make all langs parse, wait the ready state for the summary table ids.
 
                 //tkn=reqNewToken(tkn);

@@ -54,9 +54,7 @@ body{
 }
 
 table{
-    width: 80%;
-    margin-left: 10%;
-    margin-right: 10%;
+    width: 100%;
     float:none;
 
 
@@ -64,6 +62,11 @@ table{
     color: aliceblue;
     background-color: rgb(75, 52, 71);
     border-radius: 15px;
+}
+
+.reader{
+    padding-left: 10%;
+    padding-right: 10%;
 }
 
 th, td {
@@ -94,4 +97,23 @@ td{
     z-index: 1;
     margin-left: 0%;
     margin-right: 5%;
+}
+
+#graphCC{
+    width: 100%;
+    padding-left: 0%;
+    margin-left: 0%;
+    margin-right: 0%;
+    box-sizing: content-box;
+}
+
+#containercc{
+    text-align: center;
+    display: grid;
+    padding-right: 10%;
+    padding-left: 10%;
+}
+
+#cctable{
+    width: 100%;
 }

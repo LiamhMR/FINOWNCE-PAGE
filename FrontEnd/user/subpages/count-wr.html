@@ -38,7 +38,7 @@
                     <input class="interest" type="number" onchange="verifyInput('reajuste',[''],'save',false)" id="reajuste" min="0" max="100" minlength="0">
                 </div>
 
-                <input type="submit" id="save" value="GUARDAR" onclick="postReqCC('ccName','kindcc','reajuste')">
+                <input type="submit" id="save" value="GUARDAR" onclick="postReqCC('ccName','kindcc','reajuste');location.reload()">
                 <input type="button" id="cancel" value="CANCELAR" onclick="setvisible(['accounttype','interestForm'],[],false)">
             </form>
         </div>
