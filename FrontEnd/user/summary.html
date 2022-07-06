@@ -7,9 +7,9 @@
         <script src="../js/loadhtml.js"></script>
         <div data-include="../user/user-menu.html"></div>
         <!-- FIN MENÚ -->
+        <script src="https://code.highcharts.com/highcharts.js"></script>
         <link rel="stylesheet" href="/css/reset.css" type="text/css">
         <link rel="stylesheet" href="/css/summary.css" type="text/css">
-
         <script src="/js/userLoad.js"></script>
         <script src="/js/getFromURL.js"></script>
         <script src="/js/getLang.js"></script>
@@ -21,8 +21,7 @@
         <div class="summ" id="countSummary">
             <div class="table" id="ccTable">
             </div>
-            <div>
-                <img id="graph" src="https://imgs.search.brave.com/Ks2RyDXFnPuhoxHSz6SG8l3aeTmoYyjfQonrihtRYs0/rs:fit:512:512:1/g:ce/aHR0cHM6Ly9pbWFn/ZXMudmV4ZWxzLmNv/bS9tZWRpYS91c2Vy/cy8zLzEzOTk3NC9p/c29sYXRlZC9wcmV2/aWV3L2EyMmQ1NGZh/YzgyYTZhNDNkMWRl/OTgzMTdhZjEwYmE3/LWdyLS1maWNvLWRl/LWJhcnJhcy1kZS1j/b2xvcmVzLTYtYnkt/dmV4ZWxzLnBuZw" size="50px"></div>
+            <div id="graphCC">
             </div>
         </div>
 
@@ -43,8 +42,11 @@
                 getText(lang,"user","ccount","greet","hi");
                 requestNick();
                 setState("total");
+                reqChartData(Highcharts);
                 //make all langs parse, wait the ready state for the summary table ids.
-            };
+
+                //tkn=reqNewToken(tkn);
+            }
         </script>
 
     </body>

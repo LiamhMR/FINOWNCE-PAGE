@@ -21,10 +21,10 @@
             [["Fondo A","FFMM",1000,5],
             ["Fondo B","FFMM",20000,5]],
             "moves":[
-            ["Cuenta prueba","creation",500000,null,0],
-            ["Cuenta prueba 2","creation",0,null,1],
-            ["Fondo A","creation",1000,null,2],
-            ["Fondo B","creation",20000,null,3]]
+            ["Cuenta prueba","creation",500000,"Wed Jul 06 2022 01:58:11 GMT-0400 (hora estándar de Chile)",0,500000],
+            ["Cuenta prueba 2","creation",0,"Wed Jul 06 2022 01:58:11 GMT-0400 (hora estándar de Chile)",1,0],
+            ["Fondo A","creation",1000,"Wed Jul 06 2022 01:58:11 GMT-0400 (hora estándar de Chile)",2,1000],
+            ["Fondo B","creation",20000,"Wed Jul 06 2022 01:58:11 GMT-0400 (hora estándar de Chile)",3,20000]]
         },
         "leo":{
             "info":{

@@ -279,6 +279,17 @@ const requireMove = () => {
         }
     };
 };
+const requireMvId = () => {
+    return (req, res, next) => {
+        let mvId = req.headers["id"];
+        if (mvId == undefined) {
+            res.status(400).send("Incomplete data");
+        }
+        else {
+            next();
+        }
+    };
+};
 //"moves":[["cc-name","name of move",how-much,"date"],~]
 app.post("/newmove", requireOUT(), requireMove(), (req, res) => {
     let ln = (req.headers["token"]).split("_");
@@ -287,16 +298,63 @@ app.post("/newmove", requireOUT(), requireMove(), (req, res) => {
     let howMuch = parseInt(req.headers["move"]);
     let moveName = req.headers["mn"];
     let mvLenght = Object.entries(db.db[user]["moves"]).length;
-    let firstMove = [ccName, moveName, howMuch, Date(), mvLenght];
-    db.db[user]["moves"][mvLenght] = firstMove;
     let ccLenght = Object.entries(db.db[user]["ccounts"]).length;
+    var newTotal = 0;
     for (let i = 0; i < ccLenght; i++) {
         if (db.db[user]["ccounts"][i][0] == ccName) {
             db.db[user]["ccounts"][i][2] = db.db[user]["ccounts"][i][2] + howMuch;
+            newTotal = db.db[user]["ccounts"][i][2];
+        }
+    }
+    let firstMove = [ccName, moveName, howMuch, Date(), mvLenght, newTotal];
+    db.db[user]["moves"][mvLenght] = firstMove;
+    updateDB();
+    res.status(200).send("New move added");
+});
+app.post("/editmove", requireOUT(), requireMove(), requireMvId(), (req, res) => {
+    let ln = (req.headers["token"]).split("_");
+    let user = data.allUsers.logs[ln[1]];
+    let ccName = req.headers["cc"];
+    let howMuch = parseInt(req.headers["move"]);
+    let moveName = req.headers["mn"];
+    let mvId = req.headers["id"];
+    let original = db.db[user]["moves"][parseInt(mvId)][2];
+    let myMove = [ccName, moveName, howMuch, Date(), mvId];
+    db.db[user]["moves"][parseInt(mvId)] = myMove;
+    let ccLenght = Object.entries(db.db[user]["ccounts"]).length;
+    for (let i = 0; i < ccLenght; i++) {
+        if (db.db[user]["ccounts"][i][0] == ccName) {
+            db.db[user]["ccounts"][i][2] = db.db[user]["ccounts"][i][2] - original + howMuch;
         }
     }
     updateDB();
-    res.status(200).send("New move added");
+    res.status(200).send("Move edited");
+});
+app.post("/burntoken", requireOUT(), (req, res) => {
+    let newToken = createOUT();
+    let token = req.headers["token"].split("_");
+    console.log(token);
+    console.log(newToken);
+    let ln = token[1];
+    let nick = data.allUsers.logs[ln];
+    data.allUsers.users[nick][0] = newToken;
+    res.status(200).send(newToken);
+});
+app.delete("/delmove", requireOUT(), requireMvId(), (req, res) => {
+    let ln = (req.headers["token"]).split("_");
+    let user = data.allUsers.logs[ln[1]];
+    let ccName = req.headers["cc"];
+    let mvId = req.headers["id"];
+    let original = db.db[user]["moves"][parseInt(mvId)][2];
+    db.db[user]["moves"][parseInt(mvId)][0] = '';
+    let ccLenght = Object.entries(db.db[user]["ccounts"]).length;
+    for (let i = 0; i < ccLenght; i++) {
+        if (db.db[user]["ccounts"][i][0] == ccName) {
+            db.db[user]["ccounts"][i][2] = db.db[user]["ccounts"][i][2] - original;
+        }
+    }
+    updateDB();
+    res.status(200).send("Move edited");
 });
 //UPDATES
 function updateData() {
@@ -332,4 +390,4 @@ function updateDB(mix) {
 function getNick(out, lognum) {
     const obj = data.allUsers;
 }
-app.listen(6000, () => console.log('Server started on 6000'));
+app.listen(5000, () => console.log('Server started on 5000'));

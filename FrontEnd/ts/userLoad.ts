@@ -41,7 +41,6 @@ function setState(ident:string){
     req.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             const data=JSON.parse(this.response);
-            console.log(data);
             
             for (let i=0;i<Object.keys(data["ccounts"]).length;i++){
                 totalCC=totalCC+data["ccounts"][i][2];
@@ -59,6 +58,7 @@ function setState(ident:string){
             input.appendChild(aText);
             getCCSummary(data);
             getINVSummary(data);
+            //console.log(numArr[0]);
         }
     };
 
@@ -77,7 +77,6 @@ function totalINV(path:string,tmpToken:string){
         INV=total;
     })
 }
-
 function getCCSummary(data:any){
     var input:any=document.getElementById("ccTable");
     let tbl = document.createElement('table');
@@ -92,7 +91,12 @@ function getCCSummary(data:any){
         tdName.appendChild(document.createTextNode(ccName));
         const tdCant=tr.insertCell();
         tdCant.appendChild(document.createTextNode("$"+ccCant.toString(10)));
+        let rgb1=Math.random() * (0 - 255) + 255;
+        let rgb2=Math.random() * (0 - 255) + 255;
+        let rgb3=Math.random() * (0 - 255) + 255;
+        let color="rgb("+rgb1+","+rgb2+","+rgb3+")"
     }
+    console.log()
     const trFoot=tbl.insertRow();
     const tdTotal=trFoot.insertCell();
     tdTotal.appendChild(document.createTextNode("TOTAL"));
@@ -105,6 +109,96 @@ function getCCSummary(data:any){
     thCC.colSpan="2";
 }
 
+function reqChartData(graph:any){
+    let totalCC=0;
+    let totalINV=0;
+    var req = new XMLHttpRequest();
+
+    req.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            const data=JSON.parse(this.response);
+            getChartData(data,graph);
+        }
+    };
+
+    req.open("GET","/userinfo",true);
+    req.setRequestHeader("token", tmpToken);
+    req.setRequestHeader("order","ccounts");
+    req.send(null);
+}
+
+function getChartData(data:any,graph:any){
+    let numArr:Array<number>=[];
+    let strArr:Array<string>=[];
+    for (let i=0;i<Object.keys(data["ccounts"]).length;i++){
+        let ccName=data["ccounts"][i][0];
+        let ccCant=data["ccounts"][i][2];
+        numArr[i]=parseInt(ccCant);
+        strArr[i]=ccName;
+        let rgb1=Math.random() * (0 - 255) + 255;
+        let rgb2=Math.random() * (0 - 255) + 255;
+        let rgb3=Math.random() * (0 - 255) + 255;
+        let color="rgb("+rgb1+","+rgb2+","+rgb3+")"
+    }
+    graphicChart(graph,numArr,strArr);
+}
+
+
+function graphicChart(graph:any,num:any,str:any){
+    const mychart:any= {
+        chart: {
+            plotBackgroundColor: "rgb(110,32,237)",
+            plotBorderWidth: "linear-gradient(90deg, rgba(110,32,237,1) 0%, rgba(176,38,255,1) 78%)",
+            plotShadow: true,
+            backgroundColor:"rgb(255, 255, 255)",
+            type: 'pie'
+        },
+        title: {
+            text: 'Cuentas'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        accessibility: {
+            point: {
+                valueSuffix: '%'
+            }
+        },
+        plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: false
+            },
+            showInLegend: true
+            }
+        },
+        series: [{
+            name: 'Acounts',
+            colorByPoint: true,
+            data:[]
+        }]
+    };
+    const test=[{
+        name: 'Chrome',
+        y: 61.41,
+        sliced: true,
+        selected: true
+    }, {
+        name: 'Internet Explorer',
+        y: 11.84
+    }];
+    //mychart.series[0].data=test;
+    for(let i=0; i<Object.entries(num).length;i++){
+        const unid={
+            name:str[i],
+            y:num[i]
+        };
+        mychart.series[0].data.push(unid);
+    }
+    graph.chart('graphCC',mychart);
+}
 function getINVSummary(data:any){
     var input:any=document.getElementById("invTable");
     let tbl = document.createElement('table');

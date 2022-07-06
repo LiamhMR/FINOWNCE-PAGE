@@ -40,7 +40,7 @@ function fillVars(){
 }
 
 /**EJECUCIONES INMEDIATAS */
-var tkn=getParameterByName("out");;
+var tkn=getParameterByName("out");
 var lang=getLangPath(getParameterByName("lang"));
 var tempdb="/tempbackend/tempdb.json";
 var cc=getParameterByName("cc");
@@ -49,3 +49,20 @@ if (shortln==""){
     shortln="es";
 }
 console.log("Languaje set:"+shortln);
+
+function reqNewToken(token:string){
+    let tkns=token.split("_");
+    let ln=tkns[1];
+    var req = new XMLHttpRequest();
+
+    req.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText+"_"+ln)
+            return this.responseText+"_"+ln;
+        }
+    };
+
+    req.open("POST","/burntoken",true);
+    req.setRequestHeader("token", token);
+    req.send(null);
+}

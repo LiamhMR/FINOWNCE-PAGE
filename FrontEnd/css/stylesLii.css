@@ -28,6 +28,7 @@
     display: grid;
     text-align: center;
     border: #04222E;
+    z-index: 9;
     /*padding-top: 10px;*/
 }
 

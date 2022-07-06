@@ -18,7 +18,7 @@ input{
     width: 40%;
 }
 
-select{
+.selectkind{
     font-size: 30px;
     /*color: rgb(117, 117, 117);*/
     color:black;
@@ -35,12 +35,10 @@ body{
     background-color: rgb(168, 156, 214);
 }
 
-#accounttype,#addMove{
+#accounttype,#addMove,#editmv{
     visibility: hidden;
     height: 0px;
 }
-
-
 
 #upForm{
     visibility: hidden;
@@ -57,6 +55,8 @@ body{
 
 table{
     width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
     float:none;
 
 
@@ -83,4 +83,15 @@ td{
     border-color: #441d47;
     border: 1px solid;
     display: contents;
+}
+
+#graphmv,#graphCC{
+    text-align: center;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 5%;
+    padding-bottom: 10%;
+    z-index: 1;
+    margin-left: 0%;
+    margin-right: 5%;
 }

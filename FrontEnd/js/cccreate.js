@@ -232,6 +232,7 @@ function setCCMoves(ccNameInput) {
 }
 //CREAR TABLA DE MOVIMIENTOS
 var MoveId = [];
+var currEdit;
 function getMoveTable(data, ccName) {
     var ccTotal = 0;
     var input = document.getElementById("ccMoves");
@@ -240,18 +241,18 @@ function getMoveTable(data, ccName) {
     var th = tbl.createTHead();
     th.appendChild(document.createTextNode("Movimientos"));
     th.id = "ccTH";
-    for (var i = 0; i < Object.keys(data["moves"]).length; i++) {
+    var _loop_1 = function (i) {
         if (data["moves"][i][0] == ccName) {
-            var moveName = data["moves"][i][1];
-            var ccCant = data["moves"][i][2];
+            var moveName_1 = data["moves"][i][1];
+            var ccCant_1 = data["moves"][i][2];
             var dateText = data["moves"][i][3];
             MoveId[i] = data["moves"][i][4];
             var date = "Unkowing";
             var tr = tbl.insertRow();
             var tdName = tr.insertCell();
-            tdName.appendChild(document.createTextNode(moveName));
+            tdName.appendChild(document.createTextNode(moveName_1));
             var tdCant = tr.insertCell();
-            tdCant.appendChild(document.createTextNode("$" + ccCant.toString(10)));
+            tdCant.appendChild(document.createTextNode("$" + ccCant_1.toString(10)));
             var tdDate = tr.insertCell();
             if (dateText != null) {
                 date = dateText.split(" ");
@@ -262,18 +263,27 @@ function getMoveTable(data, ccName) {
                 tdDate.appendChild(document.createTextNode(dateText));
             }
             var tdEdit = tr.insertCell();
-            var editGraph = document.createElement('span');
+            editGraph = document.createElement('span');
             editGraph.className = "fa fa-edit";
-            var editButton = document.createElement('a');
+            editButton = document.createElement('a');
             editButton.className = "btn btn-info btn-lg";
             editButton.onclick = function () {
-                setvisible(['addMove'], ['300px'], true);
+                setvisible(['addMove', 'editmv'], ['300px', '40px'], true);
                 setvisible(['savemv'], [], false);
+                currEdit = data["moves"][i][4];
+                var mvNameInput = document.getElementById('ccMove');
+                var mvHmInput = document.getElementById('ccHowMuch');
+                mvNameInput.value = moveName_1;
+                mvHmInput.value = ccCant_1;
             };
             editButton.appendChild(editGraph);
             tdEdit.appendChild(editButton);
-            ccTotal = ccTotal + ccCant;
+            ccTotal = ccTotal + ccCant_1;
         }
+    };
+    var editGraph, editButton;
+    for (var i = 0; i < Object.keys(data["moves"]).length; i++) {
+        _loop_1(i);
     }
     var trFoot = tbl.insertRow();
     var tdTotal = trFoot.insertCell();
@@ -300,4 +310,191 @@ function postReqNewMove(ccName, mvName, howMuch) {
     req.setRequestHeader("move", hmInput.value);
     req.setRequestHeader("mn", mvInput.value);
     req.send(null);
+}
+function postReqEditMove(ccName, mvName, howMuch, mvid) {
+    var mvInput = document.getElementById(mvName);
+    var hmInput = document.getElementById(howMuch);
+    var req = new XMLHttpRequest();
+    req.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            location.reload();
+        }
+    };
+    req.open("POST", "/editmove", true);
+    req.setRequestHeader("token", tkn);
+    req.setRequestHeader('cc', ccName);
+    req.setRequestHeader("move", hmInput.value);
+    req.setRequestHeader("mn", mvInput.value);
+    req.setRequestHeader("id", mvid + '');
+    req.send(null);
+}
+function cleanForm(inputs) {
+    for (var i = 0; i < Object.entries(inputs).length; i++) {
+        var clean = document.getElementById(inputs[i]);
+        clean.value = "";
+    }
+}
+//DELETE REQUEST
+function delReqMove(mvid) {
+    var req = new XMLHttpRequest();
+    req.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            location.reload();
+        }
+    };
+    req.open("DELETE", "/delmove", true);
+    req.setRequestHeader("token", tkn);
+    req.setRequestHeader("id", mvid + '');
+    req.send(null);
+}
+//GRÁFICO DE RESUMEN
+function reqChartDataCC(graph) {
+    var req = new XMLHttpRequest();
+    req.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var data = JSON.parse(this.response);
+            getChartDataCC(data, graph);
+        }
+    };
+    req.open("GET", "/userinfo", true);
+    req.setRequestHeader("token", tkn);
+    req.setRequestHeader("order", "ccounts");
+    req.send(null);
+}
+function getChartDataCC(data, graph) {
+    var numArr = [];
+    var strArr = [];
+    for (var i = 0; i < Object.keys(data["ccounts"]).length; i++) {
+        var ccName = data["ccounts"][i][0];
+        var ccCant = data["ccounts"][i][2];
+        numArr[i] = parseInt(ccCant);
+        strArr[i] = ccName;
+        var rgb1 = Math.random() * (0 - 255) + 255;
+        var rgb2 = Math.random() * (0 - 255) + 255;
+        var rgb3 = Math.random() * (0 - 255) + 255;
+        var color = "rgb(" + rgb1 + "," + rgb2 + "," + rgb3 + ")";
+    }
+    graphicChartCC(graph, numArr, strArr);
+}
+function graphicChartCC(graph, num, str) {
+    var mychart = {
+        chart: {
+            plotBackgroundColor: "rgb(110,32,237)",
+            plotBorderWidth: "linear-gradient(90deg, rgba(110,32,237,1) 0%, rgba(176,38,255,1) 78%)",
+            plotShadow: true,
+            backgroundColor: "rgb(255, 255, 255)",
+            type: 'pie'
+        },
+        title: {
+            text: 'Cuentas'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        accessibility: {
+            point: {
+                valueSuffix: '%'
+            }
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: false
+                },
+                showInLegend: true
+            }
+        },
+        series: [{
+                name: 'Acounts',
+                colorByPoint: true,
+                data: []
+            }]
+    };
+    for (var i = 0; i < Object.entries(num).length; i++) {
+        var unid = {
+            name: str[i],
+            y: num[i]
+        };
+        mychart.series[0].data.push(unid);
+    }
+    graph.chart('graphCC', mychart);
+}
+//GRÁFICO DE MOVIMIENTOS
+function reqChartDataMv(graph, ccName) {
+    var req = new XMLHttpRequest();
+    req.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var data = JSON.parse(this.response);
+            getChartDataMv(data, graph, ccName);
+        }
+    };
+    req.open("GET", "/userinfo", true);
+    req.setRequestHeader("token", tkn);
+    req.setRequestHeader("order", "ccounts");
+    req.send(null);
+}
+function getChartDataMv(data, graph, cc) {
+    var numArr = [];
+    var strArr = [];
+    for (var i = 0; i < Object.keys(data["moves"]).length; i++) {
+        if (data["moves"][i][0] == cc) {
+            var dateText = (data["moves"][i][3]);
+            var date = dateText.split(" ");
+            var ccDate = date[2] + " " + date[1];
+            var ccCant = data["moves"][i][5];
+            var lenght = Object.entries(numArr).length;
+            numArr[lenght] = parseInt(ccCant);
+            strArr[lenght] = ccDate;
+            console.log("MOVE");
+        }
+    }
+    graphicChartMv(graph, numArr, strArr, cc);
+}
+function graphicChartMv(graph, num, str, ccName) {
+    var mychart = {
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: cc
+        },
+        xAxis: {
+            categories: []
+        },
+        yAxis: {
+            title: {
+                text: 'TOTAL'
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+                enableMouseTracking: true
+            }
+        },
+        series: [{
+                name: "Movimientos",
+                data: []
+            }]
+    };
+    var unidSeries = {
+        name: ccName,
+        data: []
+    };
+    //mychart.series.push(unidSeries);
+    for (var i = 0; i < Object.entries(num).length; i++) {
+        /*
+        const unid={
+            name:str[i],
+            y:num[i]
+        };*/
+        mychart.series[0].data.push(num[i]);
+        mychart.xAxis["categories"][i] = str[i];
+    }
+    console.log(mychart);
+    graph.chart('graphmv', mychart);
 }

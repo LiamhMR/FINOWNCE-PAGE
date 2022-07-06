@@ -47,3 +47,4 @@ function globalcall(ident:string){
     console.log("load bootstrap");
 }
 globalcall("gc");
+

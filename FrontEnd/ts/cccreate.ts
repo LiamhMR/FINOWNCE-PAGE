@@ -28,7 +28,7 @@ function setvisible(ident:Array<string>,size:Array<string>,atribute:boolean){
             input.style.height=size[i];
         }else{
             input.style.visibility= "hidden";
-            input.style.height="0px"
+            input.style.height="0px";
         }
         console.log(ident[i] + " visibility: " + atribute);
     }
@@ -259,6 +259,7 @@ function setCCMoves(ccNameInput:String){
 
 //CREAR TABLA DE MOVIMIENTOS
 let MoveId:Array<number>=[];
+let currEdit:number;
 function getMoveTable(data:any,ccName:String){
     var ccTotal=0;
     var input:any=document.getElementById("ccMoves");
@@ -293,9 +294,15 @@ function getMoveTable(data:any,ccName:String){
             editGraph.className="fa fa-edit";
             var editButton:any=document.createElement('a');
             editButton.className="btn btn-info btn-lg";
+
             editButton.onclick=function(){
-                setvisible(['addMove'],['300px'],true)
+                setvisible(['addMove','editmv'],['300px','40px'],true)
                 setvisible(['savemv'],[],false);
+                currEdit=data["moves"][i][4];
+                var mvNameInput:any=document.getElementById('ccMove');
+                var mvHmInput:any=document.getElementById('ccHowMuch');
+                mvNameInput.value=moveName;
+                mvHmInput.value=ccCant;
             }
             editButton.appendChild(editGraph);
             tdEdit.appendChild(editButton);
@@ -335,4 +342,208 @@ function postReqNewMove(ccName:string,mvName:string,howMuch:string){
     req.send(null);
 }
 
+function postReqEditMove(ccName:string,mvName:string,howMuch:string,mvid:number){
+    var mvInput:any=document.getElementById(mvName);
+    var hmInput:any=document.getElementById(howMuch);
+    var req = new XMLHttpRequest();
 
+    req.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            location.reload();
+        }
+    };
+
+    req.open("POST","/editmove",true);
+    req.setRequestHeader("token", tkn);
+    req.setRequestHeader('cc',ccName);
+    req.setRequestHeader("move",hmInput.value);
+    req.setRequestHeader("mn",mvInput.value);
+    req.setRequestHeader("id",mvid+'');
+    req.send(null);
+}
+
+function cleanForm(inputs:Array<string>){
+    for (let i=0;i<Object.entries(inputs).length;i++){
+        var clean:any=document.getElementById(inputs[i]);
+        clean.value="";
+    }
+}
+
+//DELETE REQUEST
+function delReqMove(mvid:number){
+    var req = new XMLHttpRequest();
+
+    req.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            location.reload();
+        }
+    };
+
+    req.open("DELETE","/delmove",true);
+    req.setRequestHeader("token", tkn);
+    req.setRequestHeader("id",mvid+'');
+    req.send(null);
+}
+
+//GRÁFICO DE RESUMEN
+function reqChartDataCC(graph:any){
+    var req = new XMLHttpRequest();
+
+    req.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            const data=JSON.parse(this.response);
+            getChartDataCC(data,graph);
+        }
+    };
+
+    req.open("GET","/userinfo",true);
+    req.setRequestHeader("token", tkn);
+    req.setRequestHeader("order","ccounts");
+    req.send(null);
+}
+
+function getChartDataCC(data:any,graph:any){
+    let numArr:Array<number>=[];
+    let strArr:Array<string>=[];
+    for (let i=0;i<Object.keys(data["ccounts"]).length;i++){
+        let ccName=data["ccounts"][i][0];
+        let ccCant=data["ccounts"][i][2];
+        numArr[i]=parseInt(ccCant);
+        strArr[i]=ccName;
+        let rgb1=Math.random() * (0 - 255) + 255;
+        let rgb2=Math.random() * (0 - 255) + 255;
+        let rgb3=Math.random() * (0 - 255) + 255;
+        let color="rgb("+rgb1+","+rgb2+","+rgb3+")"
+    }
+    graphicChartCC(graph,numArr,strArr);
+}
+
+
+function graphicChartCC(graph:any,num:any,str:any){
+    const mychart:any= {
+        chart: {
+            plotBackgroundColor: "rgb(110,32,237)",
+            plotBorderWidth: "linear-gradient(90deg, rgba(110,32,237,1) 0%, rgba(176,38,255,1) 78%)",
+            plotShadow: true,
+            backgroundColor:"rgb(255, 255, 255)",
+            type: 'pie'
+        },
+        title: {
+            text: 'Cuentas'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        accessibility: {
+            point: {
+                valueSuffix: '%'
+            }
+        },
+        plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: false
+            },
+            showInLegend: true
+            }
+        },
+        series: [{
+            name: 'Acounts',
+            colorByPoint: true,
+            data:[]
+        }]
+    };
+    for(let i=0; i<Object.entries(num).length;i++){
+        const unid={
+            name:str[i],
+            y:num[i]
+        };
+        mychart.series[0].data.push(unid);
+    }
+    graph.chart('graphCC',mychart);
+}
+
+//GRÁFICO DE MOVIMIENTOS
+function reqChartDataMv(graph:any,ccName:string){
+    var req = new XMLHttpRequest();
+
+    req.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            const data=JSON.parse(this.response);
+            getChartDataMv(data,graph,ccName);
+        }
+    };
+
+    req.open("GET","/userinfo",true);
+    req.setRequestHeader("token", tkn);
+    req.setRequestHeader("order","ccounts");
+    req.send(null);
+}
+
+function getChartDataMv(data:any,graph:any,cc:string){
+    let numArr:Array<number>=[];
+    let strArr:Array<string>=[];
+    for (let i=0;i<Object.keys(data["moves"]).length;i++){
+        if(data["moves"][i][0]==cc){
+            let dateText=(data["moves"][i][3]);
+            let date=dateText.split(" ");
+            let ccDate=date[2]+" "+date[1];
+            let ccCant=data["moves"][i][5];
+            let lenght=Object.entries(numArr).length;
+            numArr[lenght]=parseInt(ccCant);
+            strArr[lenght]=ccDate;
+            console.log("MOVE");
+        }
+    }
+    graphicChartMv(graph,numArr,strArr,cc);
+}
+
+
+function graphicChartMv(graph:any,num:any,str:any,ccName:string){
+    const mychart:any= {
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: cc
+        },
+        xAxis: {
+            categories: []
+        },
+        yAxis: {
+            title: {
+                text: 'TOTAL'
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+                enableMouseTracking: true
+            }
+        },
+        series: [{
+            name: "Movimientos",
+            data:  []
+        }]
+    };
+    const unidSeries={
+        name:ccName,
+        data:[]
+    }
+    //mychart.series.push(unidSeries);
+    for(let i=0; i<Object.entries(num).length;i++){
+        /*
+        const unid={
+            name:str[i],
+            y:num[i]
+        };*/
+        mychart.series[0].data.push(num[i]);
+        mychart.xAxis["categories"][i]=str[i];
+    }
+    console.log(mychart);
+    graph.chart('graphmv',mychart);
+}

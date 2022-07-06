@@ -34,7 +34,6 @@ function setState(ident) {
     req.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             var data = JSON.parse(this.response);
-            console.log(data);
             for (var i = 0; i < Object.keys(data["ccounts"]).length; i++) {
                 totalCC = totalCC + data["ccounts"][i][2];
             }
@@ -49,6 +48,7 @@ function setState(ident) {
             input.appendChild(aText);
             getCCSummary(data);
             getINVSummary(data);
+            //console.log(numArr[0]);
         }
     };
     req.open("GET", "/userinfo", true);
@@ -79,7 +79,12 @@ function getCCSummary(data) {
         tdName.appendChild(document.createTextNode(ccName));
         var tdCant = tr.insertCell();
         tdCant.appendChild(document.createTextNode("$" + ccCant.toString(10)));
+        var rgb1 = Math.random() * (0 - 255) + 255;
+        var rgb2 = Math.random() * (0 - 255) + 255;
+        var rgb3 = Math.random() * (0 - 255) + 255;
+        var color = "rgb(" + rgb1 + "," + rgb2 + "," + rgb3 + ")";
     }
+    console.log();
     var trFoot = tbl.insertRow();
     var tdTotal = trFoot.insertCell();
     tdTotal.appendChild(document.createTextNode("TOTAL"));
@@ -88,6 +93,91 @@ function getCCSummary(data) {
     input.appendChild(tbl);
     var thCC = document.getElementById("ccTH");
     thCC.colSpan = "2";
+}
+function reqChartData(graph) {
+    var totalCC = 0;
+    var totalINV = 0;
+    var req = new XMLHttpRequest();
+    req.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var data = JSON.parse(this.response);
+            getChartData(data, graph);
+        }
+    };
+    req.open("GET", "/userinfo", true);
+    req.setRequestHeader("token", tmpToken);
+    req.setRequestHeader("order", "ccounts");
+    req.send(null);
+}
+function getChartData(data, graph) {
+    var numArr = [];
+    var strArr = [];
+    for (var i = 0; i < Object.keys(data["ccounts"]).length; i++) {
+        var ccName = data["ccounts"][i][0];
+        var ccCant = data["ccounts"][i][2];
+        numArr[i] = parseInt(ccCant);
+        strArr[i] = ccName;
+        var rgb1 = Math.random() * (0 - 255) + 255;
+        var rgb2 = Math.random() * (0 - 255) + 255;
+        var rgb3 = Math.random() * (0 - 255) + 255;
+        var color = "rgb(" + rgb1 + "," + rgb2 + "," + rgb3 + ")";
+    }
+    graphicChart(graph, numArr, strArr);
+}
+function graphicChart(graph, num, str) {
+    var mychart = {
+        chart: {
+            plotBackgroundColor: "rgb(110,32,237)",
+            plotBorderWidth: "linear-gradient(90deg, rgba(110,32,237,1) 0%, rgba(176,38,255,1) 78%)",
+            plotShadow: true,
+            backgroundColor: "rgb(255, 255, 255)",
+            type: 'pie'
+        },
+        title: {
+            text: 'Cuentas'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        accessibility: {
+            point: {
+                valueSuffix: '%'
+            }
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: false
+                },
+                showInLegend: true
+            }
+        },
+        series: [{
+                name: 'Acounts',
+                colorByPoint: true,
+                data: []
+            }]
+    };
+    var test = [{
+            name: 'Chrome',
+            y: 61.41,
+            sliced: true,
+            selected: true
+        }, {
+            name: 'Internet Explorer',
+            y: 11.84
+        }];
+    //mychart.series[0].data=test;
+    for (var i = 0; i < Object.entries(num).length; i++) {
+        var unid = {
+            name: str[i],
+            y: num[i]
+        };
+        mychart.series[0].data.push(unid);
+    }
+    graph.chart('graphCC', mychart);
 }
 function getINVSummary(data) {
     var input = document.getElementById("invTable");

@@ -9,6 +9,7 @@
         <br>
         <div data-include="../../user/cc-menu.html"></div>
         <!-- FIN MENÚ -->
+        <script src="https://code.highcharts.com/highcharts.js"></script>
         <link rel="stylesheet" href="/css/reset.css" type="text/css">
         <link rel="stylesheet" href="/css/summary.css" type="text/css">
         <link rel="stylesheet" href="/css/ccount.css" type="text/css">
@@ -24,7 +25,7 @@
                     <label id="ccNameLabel" for="ccName">Nombre de la cuenta</label>
                     <input type="text" id="ccName" required minlength="2">
                     <label id="kindccLabel" for="kindcc">Tipo de cuenta</label>
-                    <select id="kindcc" onchange="onblockshow(['interestForm'],['100px'],verifyInput('kindcc',['Vista','Corriente'],'save'),'reajuste')">
+                    <select class="selectkind" id="kindcc" onchange="onblockshow(['interestForm'],['100px'],verifyInput('kindcc',['Vista','Corriente'],'save'),'reajuste')">
                         <option value=""></option>
                         <option value="Vista">Vista</option>
                         <option value="Corriente">Corriente</option>
@@ -50,7 +51,7 @@
 
         <div id="menu">
             <ul id="mini">
-                <li><a id="addmv" href="#" onclick="setvisible(['addMove'],['300px'],true);setvisible(['editmv'],[],false)"></a></li>
+                <li><a id="addmv" href="#" onclick="setvisible(['addMove','savemv'],['300px','40px'],true);setvisible(['editmv'],[],false);cleanForm(['ccMove','ccHowMuch'])"></a></li>
             </ul>   
         </div>
 
@@ -62,17 +63,27 @@
                     <label id="ccHowMuchLabel" for="ccHowMuch">Cantidad</label>
                     <input type="number" id="ccHowMuch" required minlength="1">
                 </div>
-
-                <input type="submit" id="savemv" value="Agregar" onclick="postReqNewMove(cc,'ccMove','ccHowMuch')">
-                <input type="submit" id="editmv" value="Guardar" onclick="">
-                <input type="button" id="cancelmv" value="Cancelar" onclick="setvisible(['addMove'],[],false)">
+                <div class="option">
+                    <input type="submit" id="savemv" value="Agregar" onclick="postReqNewMove(cc,'ccMove','ccHowMuch')">
+                    <input type="submit" id="editmv" value="Guardar" onclick="postReqEditMove(cc,'ccMove','ccHowMuch',currEdit)">
+                    <input type="button" id="cancelmv" value="Cancelar" onclick="setvisible(['addMove','editmv','savemv'],[],false)">
+                    <input type="button" id="delmv" value="Eliminar" onclick="delReqMove(currEdit)">
+                </div>
             </form>
+        </div>
+
+        <div id="graphmv">
+
         </div>
 
         <script>
             getMenu(lang,"user",8,"addmv");
             setCCMoves(cc);
+            if(document.readyState){
+                reqChartDataMv(Highcharts,cc);
 
+                //tkn=reqNewToken(tkn);
+            }
         </script>
     </body>
 </html>

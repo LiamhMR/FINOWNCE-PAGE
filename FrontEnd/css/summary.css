@@ -12,10 +12,13 @@ body{
 }
 
 .summ{
+    margin-left: 10%;
+    margin-right: 10%;
     float:inline-start;
     text-align: center;
-    padding-left: 10%;
     display: flex;
+    height: 200px;
+    min-height: auto;
 }
 /*
 table {
@@ -25,10 +28,8 @@ table {
 }
 */
 table, th, td {
-    width: 40%;
+    width: 100%;
     float:none;
-
-
     text-align: center;
     color: aliceblue;
     background-color: rgb(75, 52, 71);
@@ -45,8 +46,6 @@ table, th, td {
 }
 
 #ccMoves{
-    padding-left: 30%;
-    padding-right: 30;
     text-align: center;
 }
 th, td {
@@ -62,6 +61,14 @@ td{
 
 #graph{
     size: 600px;
-    width: 80%;
+    width: 100%;
     padding-right: 40%;
+    z-index: 0;
+}
+
+#graphCC{
+    width: 100%;
+    margin-left: 10%;
+    z-index: 0;
+    color:rgba(255, 255, 255, 0);
 }
